@@ -46,16 +46,56 @@ public class Login extends javax.swing.JFrame {
     private void initComponents() {
 
         labelLogo = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        txtUserName = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        txtPasword = new javax.swing.JPasswordField();
+        botonAcceder = new javax.swing.JButton();
         labelWallpaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(labelLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 270, 260));
+
+        jLabel1.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
+        jLabel1.setText("USUARIO");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 280, -1, -1));
+
+        txtUserName.setBackground(new java.awt.Color(208, 228, 208));
+        txtUserName.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        getContentPane().add(txtUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 300, 190, -1));
+
+        jLabel2.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
+        jLabel2.setText("CONTRASEÑA");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 340, -1, -1));
+
+        txtPasword.setBackground(new java.awt.Color(208, 228, 208));
+        txtPasword.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        getContentPane().add(txtPasword, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, 190, -1));
+
+        botonAcceder.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
+        botonAcceder.setText("ACCEDER");
+        botonAcceder.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAccederActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botonAcceder, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 410, -1, -1));
         getContentPane().add(labelWallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 500));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void botonAccederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAccederActionPerformed
+        
+        if(txtUserName.getText().equals("") || txtPasword.getText().equals("")){
+            JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
+        }
+        else{
+            //accesar mediante comprobacion de datos
+        }
+    }//GEN-LAST:event_botonAccederActionPerformed
 
     /**
      * @param args the command line arguments
@@ -93,7 +133,12 @@ public class Login extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonAcceder;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel labelLogo;
     private javax.swing.JLabel labelWallpaper;
+    private javax.swing.JPasswordField txtPasword;
+    private javax.swing.JTextField txtUserName;
     // End of variables declaration//GEN-END:variables
 }

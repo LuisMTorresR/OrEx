@@ -25,8 +25,6 @@ public class Disennio {
     }
 
 
-    
-
     public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/Logo.png"));
         return retValue;
