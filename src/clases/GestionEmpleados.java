@@ -1,5 +1,7 @@
 package clases;
 
+import java.io.*;
+import org.apache.poi.ss.usermodel.*;
 import ventanas.RegistroDeEmpleados;
 
 /**
@@ -8,39 +10,36 @@ import ventanas.RegistroDeEmpleados;
  */
 public class GestionEmpleados {
 
-    private String nombre = "";
-    private String apellido = "";
-    private String email = "";
-    private String username = "";
-    private String password = "";
-    private String telefono = "";
-    private String direccion = "";
-    private RegistroDeEmpleados data = new RegistroDeEmpleados();
-    private static String datos[];
-    public void registroEmpleados(){
-        nombre = data.getTxtNombre().toString();
-        apellido = data.getTxtApellido().toString();
-        email = data.getTxtEmail().toString();
-        username = data.getTxtUsername().toString();
-        password = data.getTxtPassword().toString();
-        telefono = data.getTxtTelefono().toString();
-        direccion = data.getTxtDireccion().toString();
-        
-        datos[0] = nombre;
-        datos[1] = apellido;
-        datos[2] = email;
-        datos[3] = username;
-        datos[4] = password;
-        datos[5] = telefono;
-        datos[6] = direccion;
+    public GestionEmpleados() {
+
     }
 
-    public String[] getDatos() {
-        return datos;
+    public void registrarEmpleado() throws FileNotFoundException, IOException {
+
+        String nameFile = BaseDeDatos.getNOMBRE_ARCHIVO();
+
+        Workbook libro = WorkbookFactory.create(new FileInputStream(nameFile));
+        String nombreHoja = libro.getSheetName(0);
+        Sheet hoja = libro.getSheet(nombreHoja);
+        String[][] datos = RegistroDeEmpleados.getDatos();
+
+        int ultimaFila = hoja.getLastRowNum() + 1;
+
+        for (int i = 0; i < datos.length; i++) {
+            Row filaNueva = hoja.createRow(i + ultimaFila);
+            Row primeraFila = hoja.getRow(0);
+            var numeroCeldas = primeraFila.getLastCellNum();
+            for (int j = 0; j < numeroCeldas; j++) {
+
+                Cell celdaNueva = filaNueva.createCell(j);
+                celdaNueva.setCellValue(datos[i][j]);
+            }
+        }
+        try (OutputStream fileOut = new FileOutputStream(nameFile)) {
+            libro.write(fileOut);
+            libro.close();
+        } catch (Exception e) {
+        }
     }
 
-    public void setDatos(String[] datos) {
-        this.datos = datos;
-    }
-    
 }

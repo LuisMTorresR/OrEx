@@ -3,10 +3,10 @@ package ventanas;
 import clases.Disennio;
 import clases.GestionEmpleados;
 import java.awt.Image;
+import java.io.IOException;
+import java.util.logging.*;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
 
 /**
  *
@@ -15,7 +15,7 @@ import javax.swing.JTextField;
 public class RegistroDeEmpleados extends javax.swing.JFrame {
 
     
-    private static String datos[];
+    private static String datos[][];
     /**
      * Creates new form RegistroDeEmpleados
      */
@@ -136,65 +136,43 @@ public class RegistroDeEmpleados extends javax.swing.JFrame {
         } else if (txtPassword.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Debe completar todos los campos");
         } else {
+            String nombre = txtNombre.getText();
+            String apellido = txtApellido.getText();
+            String email = txtEmail.getText();
+            String username = txtTelefono.getText();
+            String password = txtDireccion.getText();
+            String telefono = txtUsername.getText();
+            String direccion = txtDireccion.getText();
+            datos = new String[][]{
+                {nombre, apellido, email, username, password, telefono, direccion}};
+                    
+            try {
+                new GestionEmpleados().registrarEmpleado();
+            } catch (IOException ex) {
+                Logger.getLogger(RegistroDeEmpleados.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            JOptionPane.showMessageDialog(null, "Empleado registrado con exito!");
+            txtNombre.setText("");
+            txtApellido.setText("");
+            txtEmail.setText("");
+            txtUsername.setText("");
+            txtPassword.setText("");
+            txtTelefono.setText("");
+            txtDireccion.setText("");
 
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    public JTextField getTxtApellido() {
-        return txtApellido;
+    public static String[][] getDatos() {
+        return datos;
     }
 
-    public void setTxtApellido(JTextField txtApellido) {
-        this.txtApellido = txtApellido;
+    public static void setDatos(String[][] datos) {
+        RegistroDeEmpleados.datos = datos;
     }
 
-    public JTextField getTxtDireccion() {
-        return txtDireccion;
-    }
-
-    public void setTxtDireccion(JTextField txtDireccion) {
-        this.txtDireccion = txtDireccion;
-    }
-
-    public JTextField getTxtEmail() {
-        return txtEmail;
-    }
-
-    public void setTxtEmail(JTextField txtEmail) {
-        this.txtEmail = txtEmail;
-    }
-
-    public JTextField getTxtNombre() {
-        return txtNombre;
-    }
-
-    public void setTxtNombre(JTextField txtNombre) {
-        this.txtNombre = txtNombre;
-    }
-
-    public JPasswordField getTxtPassword() {
-        return txtPassword;
-    }
-
-    public void setTxtPassword(JPasswordField txtPassword) {
-        this.txtPassword = txtPassword;
-    }
-
-    public JTextField getTxtTelefono() {
-        return txtTelefono;
-    }
-
-    public void setTxtTelefono(JTextField txtTelefono) {
-        this.txtTelefono = txtTelefono;
-    }
-
-    public JTextField getTxtUsername() {
-        return txtUsername;
-    }
-
-    public void setTxtUsername(JTextField txtUsername) {
-        this.txtUsername = txtUsername;
-    }
+    
+   
 
     /**
      * @param args the command line arguments

@@ -3,98 +3,82 @@ package clases;
 import java.io.*;
 import javax.swing.*;
 import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.xssf.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import ventanas.VisualTablaDeDatos;
 
 public class BaseDeDatos {
 
     private JTable tabla = new VisualTablaDeDatos().getTabla();
-    private final String nombreFichero = "baseDeDatos.xls"; //nombre del archivo
-    private HSSFWorkbook libro = null;
-    private HSSFSheet hoja1 = null;
-    private HSSFSheet hoja2 = null;
-    private HSSFSheet hoja3 = null;
-    private HSSFSheet hoja4 = null;
-    private HSSFSheet hoja5 = null;
-    private File ficheroXls;
-    private FileOutputStream fichero;
+    private static final String NOMBRE_ARCHIVO = "BaseDeDatos.xlsx";
 
-
-    public void crearBaseDeDatos() {
+    public void crearBaseDeDatos() throws IOException {
+        String nameHoja1 = "Emepleados";
+        String nameHoja2 = "Productos";
+        String nameHoja3 = "VentasDiarias";
+        String nameHoja4 = "VentasSemanales";
+        String nameHoja5 = "VentasMensuales";
         //Verificamos si el archivo existe
         //De no existir se crea
-        try {
-            ficheroXls = new File(nombreFichero);
-
-            if (!ficheroXls.isFile()) {
-                fichero = new FileOutputStream(nombreFichero);
-                libro = new HSSFWorkbook();
-                hoja1 = libro.createSheet("Listado de Empleados");
-                hoja2 = libro.createSheet("Listado de Productos");
-                hoja3 = libro.createSheet("Control Ventas Diarias");
-                hoja4 = libro.createSheet("Control Ventas Semanales");
-                hoja5 = libro.createSheet("Control Ventas Mensaules");
-            }else{
-                JOptionPane.showMessageDialog(null, "Ya existe una base de datos");
+        File ficheroXls = new File(NOMBRE_ARCHIVO);
+        
+        if (!ficheroXls.isFile()) {
+            XSSFWorkbook libro = new XSSFWorkbook();
+            XSSFSheet hoja1 = libro.createSheet(nameHoja1);
+            String[] cabecero = new String[]{"Nombre", "Apellido", "Email", "Username", "Password", "Telefono", "Direccion"};
+            XSSFRow fila = hoja1.createRow(0);
+            for (int i = 0; i < cabecero.length; i++) {
+                if (fila.getRowNum() == 0) {
+                    XSSFCell celda = fila.createCell(i);
+                    celda.setCellValue(cabecero[i]);
+                }
             }
+            XSSFSheet hoja2 = libro.createSheet(nameHoja2);
+            String[] cabecero2 = new String[]{"Nombre", "Marca", "Precio", "Cantidad"};
+            XSSFRow fila2 = hoja2.createRow(0);
+            for (int i = 0; i < cabecero2.length; i++) {
+                if (fila2.getRowNum() == 0) {
+                    XSSFCell celda = fila2.createCell(i);
+                    celda.setCellValue(cabecero2[i]);
+                }
+            }
+            XSSFSheet hoja3 = libro.createSheet(nameHoja3);
+            String[] cabecero3 = new String[]{"Producto", "Cantidad", "Prec.Unit.", "Total", " ", "TotalVentas"};
+            XSSFRow fila3 = hoja3.createRow(0);
+            for (int i = 0; i < cabecero3.length; i++) {
+                if (fila3.getRowNum() == 0) {
+                    XSSFCell celda = fila3.createCell(i);
+                    celda.setCellValue(cabecero3[i]);
+                }
+            }
+            XSSFSheet hoja4 = libro.createSheet(nameHoja4);
+            String[] cabecero4 = new String[]{"Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo", " ", "Total"};
+            XSSFRow fila4 = hoja4.createRow(0);
+            for (int i = 0; i < cabecero4.length; i++) {
+                if (fila4.getRowNum() == 0) {
+                    XSSFCell celda = fila4.createCell(i);
+                    celda.setCellValue(cabecero4[i]);
+                }
+            }
+            
+            try (OutputStream fileOut = new FileOutputStream(NOMBRE_ARCHIVO)) {
+            JOptionPane.showMessageDialog(null, "Se creo la base de datos con exito.");
+            libro.write(fileOut);
 
-        } catch (FileNotFoundException e) {
+        } catch (Exception e) {
+        }
+
+        }else{
+            JOptionPane.showMessageDialog(null, "Ya existe una base de datos!");
         }
     }
 
-    public JTable getTabla() {
-        return tabla;
+    public static String getNOMBRE_ARCHIVO() {
+        return NOMBRE_ARCHIVO;
     }
 
-    public void setTabla(JTable tabla) {
-        this.tabla = tabla;
-    }
-
-    public HSSFWorkbook getLibro() {
-        return libro;
-    }
-
-    public void setLibro(HSSFWorkbook libro) {
-        this.libro = libro;
-    }
-
-    public HSSFSheet getHoja1() {
-        return hoja1;
-    }
-
-    public void setHoja1(HSSFSheet hoja1) {
-        this.hoja1 = hoja1;
-    }
-
-    public HSSFSheet getHoja2() {
-        return hoja2;
-    }
-
-    public void setHoja2(HSSFSheet hoja2) {
-        this.hoja2 = hoja2;
-    }
-
-    public HSSFSheet getHoja3() {
-        return hoja3;
-    }
-
-    public void setHoja3(HSSFSheet hoja3) {
-        this.hoja3 = hoja3;
-    }
-
-    public HSSFSheet getHoja4() {
-        return hoja4;
-    }
-
-    public void setHoja4(HSSFSheet hoja4) {
-        this.hoja4 = hoja4;
-    }
-
-    public HSSFSheet getHoja5() {
-        return hoja5;
-    }
-
-    public void setHoja5(HSSFSheet hoja5) {
-        this.hoja5 = hoja5;
-    }
     
+    
+    
+
 }

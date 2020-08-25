@@ -1,7 +1,12 @@
 package ventanas;
 
+import clases.BaseDeDatos;
 import clases.Disennio;
+import clases.Empleados;
 import java.awt.Image;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import test.TablaDeDatos;
@@ -55,7 +60,7 @@ public class VisualTablaDeDatos extends javax.swing.JFrame {
         tabla = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        jButtonActualizar = new javax.swing.JButton();
         jButtonCrearBaseDatos = new javax.swing.JButton();
         labelWallpaper = new javax.swing.JLabel();
 
@@ -88,8 +93,13 @@ public class VisualTablaDeDatos extends javax.swing.JFrame {
         jButton2.setText("Eliminar");
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 400, -1, -1));
 
-        jButton3.setText("Actualizar");
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 400, -1, -1));
+        jButtonActualizar.setText("Actualizar");
+        jButtonActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonActualizarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButtonActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 400, -1, -1));
 
         jButtonCrearBaseDatos.setText("Crear Base");
         jButtonCrearBaseDatos.addActionListener(new java.awt.event.ActionListener() {
@@ -105,8 +115,18 @@ public class VisualTablaDeDatos extends javax.swing.JFrame {
 
     private void jButtonCrearBaseDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearBaseDatosActionPerformed
 
-        new TablaDeDatos().crearBaseDeDatos();
+        try {
+            new BaseDeDatos().crearBaseDeDatos();
+        } catch (IOException ex) {
+            Logger.getLogger(VisualTablaDeDatos.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButtonCrearBaseDatosActionPerformed
+
+    private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarActionPerformed
+        
+        Class<Empleados> aClass = Empleados.class;
+        
+    }//GEN-LAST:event_jButtonActualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -146,7 +166,7 @@ public class VisualTablaDeDatos extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButtonActualizar;
     private javax.swing.JButton jButtonCrearBaseDatos;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelWallpaper;
