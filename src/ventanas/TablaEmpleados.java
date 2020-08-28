@@ -4,23 +4,23 @@ import clases.BaseDeDatos;
 import clases.Disennio;
 import clases.Empleados;
 import java.awt.Image;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.ImageIcon;
-import javax.swing.JTable;
-import test.TablaDeDatos;
+import java.io.*;
+import java.util.*;
+import java.util.logging.*;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.*;
 
 /**
  *
  * @author luism
  */
-public class VisualTablaDeDatos extends javax.swing.JFrame {
+public class TablaEmpleados extends javax.swing.JFrame {
 
     /**
      * Creates new form VisualTablaDeDatos
      */
-    public VisualTablaDeDatos() {
+    public TablaEmpleados() throws IOException {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
@@ -30,21 +30,59 @@ public class VisualTablaDeDatos extends javax.swing.JFrame {
         ImageIcon wallpaper = new ImageIcon(new ImageIcon(wallpaperUrl.getWallpaper()).getImage()
                 .getScaledInstance(labelWallpaper.getWidth(), labelWallpaper.getHeight(), Image.SCALE_DEFAULT));
         labelWallpaper.setIcon(wallpaper);
-    }
 
-    public void llenadoTabla() {
-        tabla = new TablaDeDatos().getTabla();
-        for (int i = 0; i < tabla.getRowCount(); i++) {
-            tabla.setAutoResizeMode(i);
+        //Lenado de la tabla de Empleados
+        try {
+            String nameFile = BaseDeDatos.getNOMBRE_ARCHIVO();
+            Workbook libro = WorkbookFactory.create(new FileInputStream(nameFile));
+            String nombreHoja = libro.getSheetName(0);
+            Sheet hoja = libro.getSheet(nombreHoja);
+            DefaultTableModel tableModel = new DefaultTableModel();
+
+            int maxCol = 0;
+            for (int a = 0; a <= hoja.getLastRowNum(); a++) {
+                if (hoja.getRow(a) != null) {
+                    if (hoja.getRow(a).getLastCellNum() > maxCol) {
+                        maxCol = hoja.getRow(a).getLastCellNum();
+                    }
+                }
+            }
+            if (maxCol > 0) {
+                //Añade encabezado a la tabla
+                for (int i = 1; i <= maxCol; i++) {
+                    tableModel.addColumn("Col." + i);
+                }
+                //recorre fila por fila
+                Iterator<Row> rowIterator = hoja.iterator();
+                while (rowIterator.hasNext()) {
+
+                    int index = 0;
+                    Row fila = rowIterator.next();
+
+                    Object[] obj = new Object[fila.getLastCellNum()];
+                    Iterator<Cell> cellIterator = fila.cellIterator();
+
+                    while (cellIterator.hasNext()) {
+                        Cell cell = cellIterator.next();
+                        //contenido para celdas vacias
+                        while (index < cell.getColumnIndex()) {
+                            obj[index] = "";
+                            index += 1;
+                        }
+                        obj[index] = cell.getStringCellValue();
+                        index += 1;
+                    }
+                    tableModel.addRow(obj);
+                }
+                this.tabla.setModel(tableModel);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "No existe una base de datos");
+            }
+        } catch (IOException ex) {
+            System.err.println("Error en la base de datos" + ex.getMessage());
         }
-    }
 
-    public JTable getTabla() {
-        return tabla;
-    }
-
-    public void setTabla(JTable tabla) {
-        this.tabla = tabla;
     }
 
     /**
@@ -72,17 +110,9 @@ public class VisualTablaDeDatos extends javax.swing.JFrame {
 
             },
             new String [] {
-                "ID", "Nombre", "Apellido", "Telefono", "Username", "Contraseña", "Email", "Direccion"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false, false
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
-        });
+        ));
         jScrollPane1.setViewportView(tabla);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 56, 669, 275));
@@ -115,17 +145,11 @@ public class VisualTablaDeDatos extends javax.swing.JFrame {
 
     private void jButtonCrearBaseDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearBaseDatosActionPerformed
 
-        try {
-            new BaseDeDatos().crearBaseDeDatos();
-        } catch (IOException ex) {
-            Logger.getLogger(VisualTablaDeDatos.class.getName()).log(Level.SEVERE, null, ex);
-        }
     }//GEN-LAST:event_jButtonCrearBaseDatosActionPerformed
 
     private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarActionPerformed
-        
-        Class<Empleados> aClass = Empleados.class;
-        
+
+
     }//GEN-LAST:event_jButtonActualizarActionPerformed
 
     /**
@@ -145,20 +169,25 @@ public class VisualTablaDeDatos extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(VisualTablaDeDatos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TablaEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(VisualTablaDeDatos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TablaEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(VisualTablaDeDatos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TablaEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(VisualTablaDeDatos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(TablaEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new VisualTablaDeDatos().setVisible(true);
+                try {
+                    new TablaEmpleados().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(TablaEmpleados.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }

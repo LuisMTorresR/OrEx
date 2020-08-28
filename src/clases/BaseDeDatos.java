@@ -5,11 +5,9 @@ import javax.swing.*;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.xssf.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import ventanas.VisualTablaDeDatos;
 
 public class BaseDeDatos {
 
-    private JTable tabla = new VisualTablaDeDatos().getTabla();
     private static final String NOMBRE_ARCHIVO = "BaseDeDatos.xlsx";
 
     public void crearBaseDeDatos() throws IOException {
@@ -34,7 +32,7 @@ public class BaseDeDatos {
                 }
             }
             XSSFSheet hoja2 = libro.createSheet(nameHoja2);
-            String[] cabecero2 = new String[]{"Nombre", "Marca", "Precio", "Cantidad"};
+            String[] cabecero2 = new String[]{"Codigo", "Nombre", "Marca", "Precio", "Cantidad"};
             XSSFRow fila2 = hoja2.createRow(0);
             for (int i = 0; i < cabecero2.length; i++) {
                 if (fila2.getRowNum() == 0) {

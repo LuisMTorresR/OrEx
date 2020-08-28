@@ -6,14 +6,19 @@
 package ventanas;
 
 import clases.Disennio;
+import clases.GestionProductos;
 import java.awt.Image;
-import javax.swing.ImageIcon;
+import java.io.IOException;
+import java.util.logging.*;
+import javax.swing.*;
 
 /**
  *
  * @author luism
  */
 public class RegistrarProducto extends javax.swing.JFrame {
+
+    private static String[][] datos;
 
     /**
      * Creates new form RegistrarProducto
@@ -29,7 +34,8 @@ public class RegistrarProducto extends javax.swing.JFrame {
                 .getScaledInstance(labelWallpaper.getWidth(), labelWallpaper.getHeight(), Image.SCALE_DEFAULT));
         labelWallpaper.setIcon(wallpaper);
     }
-     @Override
+
+    @Override
     public Image getIconImage() {
         Disennio icono = new Disennio();
         return icono.getIconImage();
@@ -49,41 +55,100 @@ public class RegistrarProducto extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        txtCodigo = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
+        txtMarca = new javax.swing.JTextField();
+        txtPrecio = new javax.swing.JTextField();
+        jButtonRegistrar = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        txtCantidad = new javax.swing.JTextField();
         labelWallpaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel1.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
         jLabel1.setText("Registrar Producto");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 10, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, -1, -1));
 
-        jLabel2.setText("Nombre");
+        jLabel2.setText("Codigo");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, -1, -1));
 
-        jLabel3.setText("Marca");
+        jLabel3.setText("Nombre");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 120, -1, -1));
 
-        jLabel4.setText("Precio");
+        jLabel4.setText("Marca");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, -1, -1));
 
-        jLabel5.setText("Cantidad");
+        jLabel5.setText("Precio");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, -1, -1));
-        getContentPane().add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 75, 180, -1));
-        getContentPane().add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 115, 180, -1));
-        getContentPane().add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 155, 180, -1));
-        getContentPane().add(jTextField4, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 195, 180, -1));
+        getContentPane().add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 75, 180, -1));
+        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 115, 180, -1));
+        getContentPane().add(txtMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 155, 180, -1));
+        getContentPane().add(txtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 195, 180, -1));
 
-        jButton1.setText("Registrar");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 270, -1, -1));
+        jButtonRegistrar.setText("Registrar");
+        jButtonRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonRegistrarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButtonRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 290, -1, -1));
+
+        jLabel6.setText("Cantidad");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, -1, -1));
+        getContentPane().add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 235, 180, -1));
         getContentPane().add(labelWallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(-2, 1, 310, 360));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistrarActionPerformed
+
+        if (txtCodigo.getText().equals(null)) {
+            JOptionPane.showMessageDialog(null, "Debes completar todos los campos");
+        } else if (txtNombre.getText().equals(null)) {
+            JOptionPane.showMessageDialog(null, "Debes completar todos los campos");
+        } else if (txtMarca.getText().equals(null)) {
+            JOptionPane.showMessageDialog(null, "Debes completar todos los campos");
+        } else if (txtCantidad.getText().equals(null)) {
+            JOptionPane.showMessageDialog(null, "Debes completar todos los campos");
+        } else if (txtPrecio.getText().equals(null)) {
+            JOptionPane.showMessageDialog(null, "Debes completar todos los campos");
+        } else {
+            String codigo = txtPrecio.getText();
+            String nombre = txtCodigo.getText();
+            String marca = txtNombre.getText();
+            String precio = txtMarca.getText();
+            String cantidad = txtCantidad.getText();
+            datos = new String[][]{
+                {nombre, marca, precio, codigo, cantidad}};
+            {
+            }
+            try {
+                new GestionProductos().registrarProducto();
+            } catch (IOException ex) {
+                Logger.getLogger(RegistrarProducto.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            JOptionPane.showMessageDialog(null, "Producto registrado con exito.");
+
+            txtCodigo.setText("");
+            txtNombre.setText("");
+            txtMarca.setText("");
+            txtCantidad.setText("");
+            txtPrecio.setText("");
+        }
+
+    }//GEN-LAST:event_jButtonRegistrarActionPerformed
+
+    public static String[][] getDatos() {
+        return datos;
+    }
+
+    public static void setDatos(String[][] datos) {
+        RegistrarProducto.datos = datos;
+    }
 
     /**
      * @param args the command line arguments
@@ -121,16 +186,18 @@ public class RegistrarProducto extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonRegistrar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel labelWallpaper;
+    private javax.swing.JTextField txtCantidad;
+    private javax.swing.JTextField txtCodigo;
+    private javax.swing.JTextField txtMarca;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtPrecio;
     // End of variables declaration//GEN-END:variables
 }

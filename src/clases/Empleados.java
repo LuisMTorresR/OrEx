@@ -4,7 +4,7 @@ package clases;
 import java.io.IOException;
 import javax.swing.JTable;
 import org.apache.poi.hssf.usermodel.*;
-import ventanas.VisualTablaDeDatos;
+import ventanas.TablaEmpleados;
 
 /**
  *
@@ -14,7 +14,7 @@ public class Empleados {
 
     public Empleados() throws IOException {
         
-//        JTable tabla = new VisualTablaDeDatos().getTabla();
+//        JTable tabla = new TablaEmpleados().getTabla();
 //            HSSFSheet hoja1 = new BaseDeDatos().getHoja1();
 //            HSSFWorkbook libro = new BaseDeDatos().getLibro();
 

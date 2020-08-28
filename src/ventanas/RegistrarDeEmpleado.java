@@ -12,14 +12,14 @@ import javax.swing.JOptionPane;
  *
  * @author luism
  */
-public class RegistroDeEmpleados extends javax.swing.JFrame {
+public class RegistrarDeEmpleado extends javax.swing.JFrame {
 
     
     private static String datos[][];
     /**
      * Creates new form RegistroDeEmpleados
      */
-    public RegistroDeEmpleados() {
+    public RegistrarDeEmpleado() {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
@@ -139,9 +139,9 @@ public class RegistroDeEmpleados extends javax.swing.JFrame {
             String nombre = txtNombre.getText();
             String apellido = txtApellido.getText();
             String email = txtEmail.getText();
-            String username = txtTelefono.getText();
-            String password = txtDireccion.getText();
-            String telefono = txtUsername.getText();
+            String username = txtUsername.getText();
+            String password = txtPassword.getText();
+            String telefono = txtTelefono.getText();
             String direccion = txtDireccion.getText();
             datos = new String[][]{
                 {nombre, apellido, email, username, password, telefono, direccion}};
@@ -149,7 +149,7 @@ public class RegistroDeEmpleados extends javax.swing.JFrame {
             try {
                 new GestionEmpleados().registrarEmpleado();
             } catch (IOException ex) {
-                Logger.getLogger(RegistroDeEmpleados.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(RegistrarDeEmpleado.class.getName()).log(Level.SEVERE, null, ex);
             }
             JOptionPane.showMessageDialog(null, "Empleado registrado con exito!");
             txtNombre.setText("");
@@ -168,7 +168,7 @@ public class RegistroDeEmpleados extends javax.swing.JFrame {
     }
 
     public static void setDatos(String[][] datos) {
-        RegistroDeEmpleados.datos = datos;
+        RegistrarDeEmpleado.datos = datos;
     }
 
     
@@ -191,20 +191,21 @@ public class RegistroDeEmpleados extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(RegistroDeEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegistrarDeEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(RegistroDeEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegistrarDeEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(RegistroDeEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegistrarDeEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(RegistroDeEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(RegistrarDeEmpleado.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new RegistroDeEmpleados().setVisible(true);
+                new RegistrarDeEmpleado().setVisible(true);
             }
         });
     }

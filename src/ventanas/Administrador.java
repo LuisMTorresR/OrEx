@@ -1,8 +1,12 @@
 
 package ventanas;
 
+import clases.BaseDeDatos;
 import clases.Disennio;
 import java.awt.Image;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 /**
@@ -45,9 +49,9 @@ public class Administrador extends javax.swing.JFrame {
         botonGestionProducto = new javax.swing.JButton();
         botonRegistroEmpl = new javax.swing.JButton();
         botonGestionEmpl = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        bontonVentas = new javax.swing.JButton();
         botonInventario = new javax.swing.JButton();
-        botonVentas = new javax.swing.JButton();
+        botonCrearBaseDeDatos = new javax.swing.JButton();
         botonCaja = new javax.swing.JButton();
         botonLibros = new javax.swing.JButton();
         labelWallpaper = new javax.swing.JLabel();
@@ -58,31 +62,61 @@ public class Administrador extends javax.swing.JFrame {
 
         botonAggProducto.setText("Agg Producto");
         botonAggProducto.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        botonAggProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonAggProductoActionPerformed(evt);
+            }
+        });
         getContentPane().add(botonAggProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, 80, 70));
 
         botonGestionProducto.setText("Gestion Producto");
         botonGestionProducto.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        botonGestionProducto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonGestionProductoActionPerformed(evt);
+            }
+        });
         getContentPane().add(botonGestionProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 220, 80, 70));
 
         botonRegistroEmpl.setText("Registrar Empleado");
         botonRegistroEmpl.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        botonRegistroEmpl.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonRegistroEmplActionPerformed(evt);
+            }
+        });
         getContentPane().add(botonRegistroEmpl, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 100, 80, 70));
 
         botonGestionEmpl.setText("Gestionoar Empleado");
         botonGestionEmpl.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        botonGestionEmpl.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonGestionEmplActionPerformed(evt);
+            }
+        });
         getContentPane().add(botonGestionEmpl, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 220, 80, 70));
 
-        jButton5.setText("Inventario");
-        jButton5.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 220, 80, 70));
+        bontonVentas.setText("Venrtas");
+        bontonVentas.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        getContentPane().add(bontonVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 220, 80, 70));
 
         botonInventario.setText("Inventario");
         botonInventario.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        botonInventario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonInventarioActionPerformed(evt);
+            }
+        });
         getContentPane().add(botonInventario, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, 80, 70));
 
-        botonVentas.setText("Ventas");
-        botonVentas.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
-        getContentPane().add(botonVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 340, 80, 70));
+        botonCrearBaseDeDatos.setText("Crear Base de Datos");
+        botonCrearBaseDeDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        botonCrearBaseDeDatos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCrearBaseDeDatosActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botonCrearBaseDeDatos, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 340, 80, 70));
 
         botonCaja.setText("Caja");
         botonCaja.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
@@ -95,6 +129,46 @@ public class Administrador extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void botonGestionEmplActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGestionEmplActionPerformed
+       
+        try {
+            new TablaEmpleados().setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(Administrador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_botonGestionEmplActionPerformed
+
+    private void botonRegistroEmplActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistroEmplActionPerformed
+        
+        new RegistrarDeEmpleado().setVisible(true);
+        
+    }//GEN-LAST:event_botonRegistroEmplActionPerformed
+
+    private void botonCrearBaseDeDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCrearBaseDeDatosActionPerformed
+  
+        try {
+            new BaseDeDatos().crearBaseDeDatos();
+        } catch (IOException ex) {
+            Logger.getLogger(Administrador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_botonCrearBaseDeDatosActionPerformed
+
+    private void botonAggProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAggProductoActionPerformed
+
+        new RegistrarProducto().setVisible(true);
+        
+    }//GEN-LAST:event_botonAggProductoActionPerformed
+
+    private void botonGestionProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGestionProductoActionPerformed
+       
+    }//GEN-LAST:event_botonGestionProductoActionPerformed
+
+    private void botonInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonInventarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_botonInventarioActionPerformed
 
     /**
      * @param args the command line arguments
@@ -132,15 +206,15 @@ public class Administrador extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton bontonVentas;
     private javax.swing.JButton botonAggProducto;
     private javax.swing.JButton botonCaja;
+    private javax.swing.JButton botonCrearBaseDeDatos;
     private javax.swing.JButton botonGestionEmpl;
     private javax.swing.JButton botonGestionProducto;
     private javax.swing.JButton botonInventario;
     private javax.swing.JButton botonLibros;
     private javax.swing.JButton botonRegistroEmpl;
-    private javax.swing.JButton botonVentas;
-    private javax.swing.JButton jButton5;
     private javax.swing.JLabel labelWallpaper;
     // End of variables declaration//GEN-END:variables
 }
