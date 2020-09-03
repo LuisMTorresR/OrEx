@@ -98,6 +98,11 @@ public class Administrador extends javax.swing.JFrame {
 
         bontonVentas.setText("Venrtas");
         bontonVentas.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        bontonVentas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bontonVentasActionPerformed(evt);
+            }
+        });
         getContentPane().add(bontonVentas, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 220, 80, 70));
 
         botonInventario.setText("Inventario");
@@ -120,9 +125,14 @@ public class Administrador extends javax.swing.JFrame {
 
         botonCaja.setText("Caja");
         botonCaja.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        botonCaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCajaActionPerformed(evt);
+            }
+        });
         getContentPane().add(botonCaja, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 100, 80, 70));
 
-        botonLibros.setText("Libros");
+        botonLibros.setText("Sistema");
         botonLibros.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
         getContentPane().add(botonLibros, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 340, 80, 70));
         getContentPane().add(labelWallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 610, 490));
@@ -133,7 +143,7 @@ public class Administrador extends javax.swing.JFrame {
     private void botonGestionEmplActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGestionEmplActionPerformed
        
         try {
-            new TablaEmpleados().setVisible(true);
+            new Gestion_Empleados().setVisible(true);
         } catch (IOException ex) {
             Logger.getLogger(Administrador.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -164,11 +174,23 @@ public class Administrador extends javax.swing.JFrame {
 
     private void botonGestionProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGestionProductoActionPerformed
        
+        new GestionDeProductos().setVisible(true);
     }//GEN-LAST:event_botonGestionProductoActionPerformed
 
     private void botonInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonInventarioActionPerformed
-        // TODO add your handling code here:
+        
+        new Inventario().setVisible(true);
     }//GEN-LAST:event_botonInventarioActionPerformed
+
+    private void bontonVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bontonVentasActionPerformed
+        
+        new Ventas().setVisible(true);
+    }//GEN-LAST:event_bontonVentasActionPerformed
+
+    private void botonCajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCajaActionPerformed
+        
+        new Caja().setVisible(true);
+    }//GEN-LAST:event_botonCajaActionPerformed
 
     /**
      * @param args the command line arguments

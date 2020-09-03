@@ -1,13 +1,8 @@
 package clases;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import static org.apache.commons.math3.fitting.leastsquares.LeastSquaresFactory.model;
 import org.apache.poi.ss.usermodel.*;
 import ventanas.RegistrarDeEmpleado;
 
@@ -18,10 +13,13 @@ import ventanas.RegistrarDeEmpleado;
 public class GestionEmpleados {
 
     private String nameFile = BaseDeDatos.getNOMBRE_ARCHIVO();
+    public JTable tabla;
+    public DefaultTableModel tableModel = new DefaultTableModel();
 
     public GestionEmpleados() {
 
     }
+
 
     public void registrarEmpleado() throws FileNotFoundException, IOException {
 

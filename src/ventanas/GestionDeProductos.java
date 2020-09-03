@@ -1,24 +1,14 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ventanas;
 
 import clases.BaseDeDatos;
 import clases.Disennio;
 import java.awt.Image;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.util.Iterator;
-import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.ss.usermodel.*;
+
 
 /**
  *
@@ -26,14 +16,12 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
  */
 public class GestionDeProductos extends javax.swing.JFrame {
 
-    /**
-     * Creates new form GestionDeProductos
-     */
+
     public GestionDeProductos() {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
-        setTitle("Administrador");
+        setTitle("Gestio de Productos");
         Disennio wallpaperUrl = new Disennio();
 
         ImageIcon wallpaper = new ImageIcon(new ImageIcon(wallpaperUrl.getWallpaper()).getImage()
@@ -94,10 +82,11 @@ public class GestionDeProductos extends javax.swing.JFrame {
     }
     
     @Override
-    public Image getIconImage() {
+    public Image getIconImage(){
         Disennio icono = new Disennio();
         return icono.getIconImage();
     }
+
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -112,9 +101,13 @@ public class GestionDeProductos extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
         botonActualizar = new javax.swing.JButton();
+        botonInfo = new javax.swing.JButton();
+        botonModif = new javax.swing.JButton();
+        botonEliminar = new javax.swing.JButton();
         labelWallpaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(getIconImage());
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
@@ -134,10 +127,19 @@ public class GestionDeProductos extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tabla);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(31, 66, 646, 311));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 646, 311));
 
         botonActualizar.setText("Actualizar");
-        getContentPane().add(botonActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(285, 414, -1, -1));
+        getContentPane().add(botonActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 420, -1, -1));
+
+        botonInfo.setText("Informacio");
+        getContentPane().add(botonInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 420, -1, -1));
+
+        botonModif.setText("Modificar");
+        getContentPane().add(botonModif, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 420, -1, -1));
+
+        botonEliminar.setText("Eliminar");
+        getContentPane().add(botonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 420, -1, -1));
         getContentPane().add(labelWallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(-4, -3, 700, 500));
 
         pack();
@@ -180,6 +182,9 @@ public class GestionDeProductos extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonActualizar;
+    private javax.swing.JButton botonEliminar;
+    private javax.swing.JButton botonInfo;
+    private javax.swing.JButton botonModif;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelWallpaper;

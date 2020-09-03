@@ -4,35 +4,35 @@ import clases.BaseDeDatos;
 import clases.Disennio;
 import java.awt.Image;
 import java.io.*;
-import java.util.Iterator;
+import java.util.*;
+import java.util.logging.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import org.apache.poi.ss.usermodel.*;
-
 
 /**
  *
  * @author luism
  */
-public class Inventario extends javax.swing.JFrame {
+public class Gestion_Empleados extends javax.swing.JFrame {
 
 
-    public Inventario() {
+    public Gestion_Empleados() throws IOException {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
-        setTitle("Inventario");
+        setTitle("Gestion de Empleados");
         Disennio wallpaperUrl = new Disennio();
 
         ImageIcon wallpaper = new ImageIcon(new ImageIcon(wallpaperUrl.getWallpaper()).getImage()
                 .getScaledInstance(labelWallpaper.getWidth(), labelWallpaper.getHeight(), Image.SCALE_DEFAULT));
         labelWallpaper.setIcon(wallpaper);
-        
-        //Lenado de la tabla de Productos
+
+        //Lenado de la tabla de Empleados
         try {
             String nameFile = BaseDeDatos.getNOMBRE_ARCHIVO();
             Workbook libro = WorkbookFactory.create(new FileInputStream(nameFile));
-            String nombreHoja = libro.getSheetName(1);
+            String nombreHoja = libro.getSheetName(0);
             Sheet hoja = libro.getSheet(nombreHoja);
             DefaultTableModel tableModel = new DefaultTableModel();
 
@@ -80,7 +80,7 @@ public class Inventario extends javax.swing.JFrame {
             System.err.println("Error en la base de datos" + ex.getMessage());
         }
     }
-    
+
     @Override
     public Image getIconImage() {
         Disennio icono = new Disennio();
@@ -98,6 +98,10 @@ public class Inventario extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
+        botonInfo = new javax.swing.JButton();
+        botonEliminar = new javax.swing.JButton();
+        botonModificar = new javax.swing.JButton();
+        botonActualizar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         labelWallpaper = new javax.swing.JLabel();
 
@@ -105,35 +109,66 @@ public class Inventario extends javax.swing.JFrame {
         setIconImage(getIconImage());
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        tabla = new javax.swing.JTable(){
+            public boolean isCellEditable(int row,int col){
+                for(int i = 0; i<tabla.getRowCount(); i++){
+                    if(row==i){
+                        return false;
+                    }
+                }
+                return true;
+            }
+        };
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
-        });
+        ));
         jScrollPane1.setViewportView(tabla);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(25, 70, 643, 299));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 669, 275));
 
-        jLabel1.setText("Inventario");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(298, 22, -1, -1));
-        getContentPane().add(labelWallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(2, 1, 700, 400));
+        botonInfo.setText("Informacion");
+        getContentPane().add(botonInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 397, -1, -1));
+
+        botonEliminar.setText("Eliminar");
+        getContentPane().add(botonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 400, -1, -1));
+
+        botonModificar.setText("Modificar");
+        botonModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonModificarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botonModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 400, -1, -1));
+
+        botonActualizar.setText("Actualizar");
+        botonActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonActualizarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botonActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 400, -1, -1));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setText("Gestion de Empleados");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 30, -1, -1));
+        getContentPane().add(labelWallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -6, 700, 510));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void botonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarActionPerformed
+
+    }//GEN-LAST:event_botonActualizarActionPerformed
+
+    private void botonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarActionPerformed
+
+
+    }//GEN-LAST:event_botonModificarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -152,25 +187,33 @@ public class Inventario extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Inventario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Gestion_Empleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Inventario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Gestion_Empleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Inventario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Gestion_Empleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Inventario.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Gestion_Empleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
+        //</editor-fold>
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Inventario().setVisible(true);
+                try {
+                    new Gestion_Empleados().setVisible(true);
+                } catch (IOException ex) {
+                    Logger.getLogger(Gestion_Empleados.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonActualizar;
+    private javax.swing.JButton botonEliminar;
+    private javax.swing.JButton botonInfo;
+    private javax.swing.JButton botonModificar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelWallpaper;

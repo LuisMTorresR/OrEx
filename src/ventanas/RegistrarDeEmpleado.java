@@ -16,14 +16,13 @@ public class RegistrarDeEmpleado extends javax.swing.JFrame {
 
     
     private static String datos[][];
-    /**
-     * Creates new form RegistroDeEmpleados
-     */
+
+    
     public RegistrarDeEmpleado() {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
-        setTitle("Administrador");
+        setTitle("Registrar Empleado");
         Disennio wallpaperUrl = new Disennio();
 
         ImageIcon wallpaper = new ImageIcon(new ImageIcon(wallpaperUrl.getWallpaper()).getImage()
@@ -64,13 +63,16 @@ public class RegistrarDeEmpleado extends javax.swing.JFrame {
         txtUsername = new javax.swing.JTextField();
         txtPassword = new javax.swing.JPasswordField();
         jButton3 = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
+        comboNivel = new javax.swing.JComboBox<>();
         labelWallpaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(getIconImage());
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Cambria", 1, 24)); // NOI18N
-        jLabel1.setText("Gestion de Empleado");
+        jLabel1.setText("Registrar de Empleado");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, -1, -1));
 
         jLabel2.setText("Nombre");
@@ -100,10 +102,10 @@ public class RegistrarDeEmpleado extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 280, -1, -1));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 330, -1, -1));
 
         jButton2.setText("Modificar");
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 340, -1, -1));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 380, -1, -1));
         getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 145, 140, -1));
         getContentPane().add(txtApellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 200, 140, -1));
         getContentPane().add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 255, 140, -1));
@@ -113,7 +115,13 @@ public class RegistrarDeEmpleado extends javax.swing.JFrame {
         getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 200, 140, -1));
 
         jButton3.setText("Guardar");
-        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 400, -1, -1));
+        getContentPane().add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 430, -1, -1));
+
+        jLabel9.setText("Nivel");
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 250, -1, -1));
+
+        comboNivel.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { " ", "Administrador", "Cajero" }));
+        getContentPane().add(comboNivel, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 245, -1, -1));
         getContentPane().add(labelWallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(-1, -4, 700, 510));
 
         pack();
@@ -211,6 +219,7 @@ public class RegistrarDeEmpleado extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> comboNivel;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -222,6 +231,7 @@ public class RegistrarDeEmpleado extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel labelWallpaper;
     private javax.swing.JTextField txtApellido;
     private javax.swing.JTextField txtDireccion;

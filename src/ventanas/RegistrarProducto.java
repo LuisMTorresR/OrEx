@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package ventanas;
 
 import clases.Disennio;
@@ -20,14 +15,12 @@ public class RegistrarProducto extends javax.swing.JFrame {
 
     private static String[][] datos;
 
-    /**
-     * Creates new form RegistrarProducto
-     */
+
     public RegistrarProducto() {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
-        setTitle("Administrador");
+        setTitle("Registrar Producto");
         Disennio wallpaperUrl = new Disennio();
 
         ImageIcon wallpaper = new ImageIcon(new ImageIcon(wallpaperUrl.getWallpaper()).getImage()
@@ -65,6 +58,7 @@ public class RegistrarProducto extends javax.swing.JFrame {
         labelWallpaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(getIconImage());
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N

@@ -2,29 +2,26 @@ package ventanas;
 
 import clases.BaseDeDatos;
 import clases.Disennio;
-import clases.Empleados;
 import java.awt.Image;
 import java.io.*;
-import java.util.*;
-import java.util.logging.*;
+import java.util.Iterator;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import org.apache.poi.ss.usermodel.*;
+
 
 /**
  *
  * @author luism
  */
-public class TablaEmpleados extends javax.swing.JFrame {
+public class Stock extends javax.swing.JFrame {
 
-    /**
-     * Creates new form VisualTablaDeDatos
-     */
-    public TablaEmpleados() throws IOException {
+
+    public Stock() {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
-        setTitle("Administrador");
+        setTitle("Stock");
         Disennio wallpaperUrl = new Disennio();
 
         ImageIcon wallpaper = new ImageIcon(new ImageIcon(wallpaperUrl.getWallpaper()).getImage()
@@ -32,10 +29,11 @@ public class TablaEmpleados extends javax.swing.JFrame {
         labelWallpaper.setIcon(wallpaper);
 
         //Lenado de la tabla de Empleados
+        
         try {
             String nameFile = BaseDeDatos.getNOMBRE_ARCHIVO();
             Workbook libro = WorkbookFactory.create(new FileInputStream(nameFile));
-            String nombreHoja = libro.getSheetName(0);
+            String nombreHoja = libro.getSheetName(1);
             Sheet hoja = libro.getSheet(nombreHoja);
             DefaultTableModel tableModel = new DefaultTableModel();
 
@@ -82,9 +80,14 @@ public class TablaEmpleados extends javax.swing.JFrame {
         } catch (IOException ex) {
             System.err.println("Error en la base de datos" + ex.getMessage());
         }
-
     }
-
+    
+    @Override
+    public Image getIconImage(){
+        Disennio icono = new Disennio();
+        return icono.getIconImage();
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -96,15 +99,23 @@ public class TablaEmpleados extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButtonActualizar = new javax.swing.JButton();
-        jButtonCrearBaseDatos = new javax.swing.JButton();
+        jLabel2 = new javax.swing.JLabel();
         labelWallpaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setIconImage(getIconImage());
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        tabla = new javax.swing.JTable(){
+            public boolean isCellEditable(int row,int col){
+                for(int i = 0; i<tabla.getRowCount(); i++){
+                    if(row==i){
+                        return false;
+                    }
+                }
+                return true;
+            }
+        };
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -115,42 +126,15 @@ public class TablaEmpleados extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tabla);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 56, 669, 275));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 78, 625, 340));
 
-        jButton1.setText("Informacion");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 397, -1, -1));
-
-        jButton2.setText("Eliminar");
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 400, -1, -1));
-
-        jButtonActualizar.setText("Actualizar");
-        jButtonActualizar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonActualizarActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButtonActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 400, -1, -1));
-
-        jButtonCrearBaseDatos.setText("Crear Base");
-        jButtonCrearBaseDatos.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonCrearBaseDatosActionPerformed(evt);
-            }
-        });
-        getContentPane().add(jButtonCrearBaseDatos, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 400, -1, -1));
-        getContentPane().add(labelWallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -6, 700, 510));
+        jLabel2.setFont(new java.awt.Font("Dialog", 3, 24)); // NOI18N
+        jLabel2.setText("STOCK");
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 30, -1, -1));
+        getContentPane().add(labelWallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(-6, 0, 700, 500));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButtonCrearBaseDatosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonCrearBaseDatosActionPerformed
-
-    }//GEN-LAST:event_jButtonCrearBaseDatosActionPerformed
-
-    private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarActionPerformed
-
-
-    }//GEN-LAST:event_jButtonActualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -169,34 +153,26 @@ public class TablaEmpleados extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TablaEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Stock.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TablaEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Stock.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TablaEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Stock.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TablaEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Stock.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                try {
-                    new TablaEmpleados().setVisible(true);
-                } catch (IOException ex) {
-                    Logger.getLogger(TablaEmpleados.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                new Stock().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButtonActualizar;
-    private javax.swing.JButton jButtonCrearBaseDatos;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelWallpaper;
     private javax.swing.JTable tabla;
