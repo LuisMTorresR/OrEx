@@ -1,13 +1,10 @@
 package ventanas;
 
-import clases.BaseDeDatos;
 import clases.Disennio;
+import clases.GestionProductos;
 import java.awt.Image;
-import java.io.*;
-import java.util.Iterator;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import org.apache.poi.ss.usermodel.*;
 
 
 /**
@@ -29,56 +26,10 @@ public class Inventario extends javax.swing.JFrame {
         labelWallpaper.setIcon(wallpaper);
         
         //Lenado de la tabla de Productos
-        try {
-            String nameFile = BaseDeDatos.getNOMBRE_ARCHIVO();
-            Workbook libro = WorkbookFactory.create(new FileInputStream(nameFile));
-            String nombreHoja = libro.getSheetName(1);
-            Sheet hoja = libro.getSheet(nombreHoja);
-            DefaultTableModel tableModel = new DefaultTableModel();
-
-            int maxCol = 0;
-            for (int a = 0; a <= hoja.getLastRowNum(); a++) {
-                if (hoja.getRow(a) != null) {
-                    if (hoja.getRow(a).getLastCellNum() > maxCol) {
-                        maxCol = hoja.getRow(a).getLastCellNum();
-                    }
-                }
-            }
-            if (maxCol > 0) {
-                //Añade encabezado a la tabla
-                for (int i = 1; i <= maxCol; i++) {
-                    tableModel.addColumn("Col." + i);
-                }
-                //recorre fila por fila
-                Iterator<Row> rowIterator = hoja.iterator();
-                while (rowIterator.hasNext()) {
-
-                    int index = 0;
-                    Row fila = rowIterator.next();
-
-                    Object[] obj = new Object[fila.getLastCellNum()];
-                    Iterator<Cell> cellIterator = fila.cellIterator();
-
-                    while (cellIterator.hasNext()) {
-                        Cell cell = cellIterator.next();
-                        //contenido para celdas vacias
-                        while (index < cell.getColumnIndex()) {
-                            obj[index] = "";
-                            index += 1;
-                        }
-                        obj[index] = cell.getStringCellValue();
-                        index += 1;
-                    }
-                    tableModel.addRow(obj);
-                }
-                this.tabla.setModel(tableModel);
-
-            } else {
-                JOptionPane.showMessageDialog(null, "No existe una base de datos");
-            }
-        } catch (IOException ex) {
-            System.err.println("Error en la base de datos" + ex.getMessage());
-        }
+        GestionProductos llenarTabla = new GestionProductos();
+        llenarTabla.llenadoTablaProductos();
+        DefaultTableModel modelo = llenarTabla.tableModel;
+        this.tabla.setModel(modelo);
     }
     
     @Override

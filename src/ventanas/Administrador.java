@@ -143,7 +143,7 @@ public class Administrador extends javax.swing.JFrame {
     private void botonGestionEmplActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGestionEmplActionPerformed
        
         try {
-            new Gestion_Empleados().setVisible(true);
+            new ListadoDeEmpleados().setVisible(true);
         } catch (IOException ex) {
             Logger.getLogger(Administrador.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -174,7 +174,7 @@ public class Administrador extends javax.swing.JFrame {
 
     private void botonGestionProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGestionProductoActionPerformed
        
-        new GestionDeProductos().setVisible(true);
+        new ListadoDeProductos().setVisible(true);
     }//GEN-LAST:event_botonGestionProductoActionPerformed
 
     private void botonInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonInventarioActionPerformed

@@ -1,86 +1,38 @@
 package ventanas;
 
-import clases.BaseDeDatos;
 import clases.Disennio;
+import clases.GestionEmpleados;
 import java.awt.Image;
 import java.io.*;
-import java.util.*;
 import java.util.logging.*;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
-import org.apache.poi.ss.usermodel.*;
 
 /**
  *
  * @author luism
  */
-public class Gestion_Empleados extends javax.swing.JFrame {
-
-
-    public Gestion_Empleados() throws IOException {
+public class ListadoDeEmpleados extends javax.swing.JFrame {
+    
+    public ListadoDeEmpleados() throws IOException {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
         setTitle("Gestion de Empleados");
         Disennio wallpaperUrl = new Disennio();
-
+        
         ImageIcon wallpaper = new ImageIcon(new ImageIcon(wallpaperUrl.getWallpaper()).getImage()
                 .getScaledInstance(labelWallpaper.getWidth(), labelWallpaper.getHeight(), Image.SCALE_DEFAULT));
         labelWallpaper.setIcon(wallpaper);
 
         //Lenado de la tabla de Empleados
-        try {
-            String nameFile = BaseDeDatos.getNOMBRE_ARCHIVO();
-            Workbook libro = WorkbookFactory.create(new FileInputStream(nameFile));
-            String nombreHoja = libro.getSheetName(0);
-            Sheet hoja = libro.getSheet(nombreHoja);
-            DefaultTableModel tableModel = new DefaultTableModel();
-
-            int maxCol = 0;
-            for (int a = 0; a <= hoja.getLastRowNum(); a++) {
-                if (hoja.getRow(a) != null) {
-                    if (hoja.getRow(a).getLastCellNum() > maxCol) {
-                        maxCol = hoja.getRow(a).getLastCellNum();
-                    }
-                }
-            }
-            if (maxCol > 0) {
-                //Añade encabezado a la tabla
-                for (int i = 1; i <= maxCol; i++) {
-                    tableModel.addColumn("Col." + i);
-                }
-                //recorre fila por fila
-                Iterator<Row> rowIterator = hoja.iterator();
-                while (rowIterator.hasNext()) {
-
-                    int index = 0;
-                    Row fila = rowIterator.next();
-
-                    Object[] obj = new Object[fila.getLastCellNum()];
-                    Iterator<Cell> cellIterator = fila.cellIterator();
-
-                    while (cellIterator.hasNext()) {
-                        Cell cell = cellIterator.next();
-                        //contenido para celdas vacias
-                        while (index < cell.getColumnIndex()) {
-                            obj[index] = "";
-                            index += 1;
-                        }
-                        obj[index] = cell.getStringCellValue();
-                        index += 1;
-                    }
-                    tableModel.addRow(obj);
-                }
-                this.tabla.setModel(tableModel);
-
-            } else {
-                JOptionPane.showMessageDialog(null, "No existe una base de datos");
-            }
-        } catch (IOException ex) {
-            System.err.println("Error en la base de datos" + ex.getMessage());
-        }
+        GestionEmpleados llenarTabla = new GestionEmpleados();
+        llenarTabla.llenadoTablaEmpleados();
+        DefaultTableModel modelo = llenarTabla.tableModel;
+        this.tabla.setModel(modelo);
+        
     }
-
+    
     @Override
     public Image getIconImage() {
         Disennio icono = new Disennio();
@@ -166,7 +118,7 @@ public class Gestion_Empleados extends javax.swing.JFrame {
     }//GEN-LAST:event_botonActualizarActionPerformed
 
     private void botonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarActionPerformed
-
+        
 
     }//GEN-LAST:event_botonModificarActionPerformed
 
@@ -187,13 +139,13 @@ public class Gestion_Empleados extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Gestion_Empleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListadoDeEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Gestion_Empleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListadoDeEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Gestion_Empleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListadoDeEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Gestion_Empleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(ListadoDeEmpleados.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
         //</editor-fold>
@@ -201,9 +153,9 @@ public class Gestion_Empleados extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 try {
-                    new Gestion_Empleados().setVisible(true);
+                    new ListadoDeEmpleados().setVisible(true);
                 } catch (IOException ex) {
-                    Logger.getLogger(Gestion_Empleados.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(ListadoDeEmpleados.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         });
