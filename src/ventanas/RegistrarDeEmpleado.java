@@ -129,6 +129,7 @@ public class RegistrarDeEmpleado extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
+        //validacion de campos
         if (txtNombre.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Debe completar todos los campos");
         } else if (txtApellido.getText().equals("")) {
@@ -160,6 +161,8 @@ public class RegistrarDeEmpleado extends javax.swing.JFrame {
                 Logger.getLogger(RegistrarDeEmpleado.class.getName()).log(Level.SEVERE, null, ex);
             }
             JOptionPane.showMessageDialog(null, "Empleado registrado con exito!");
+            
+            //limpiar campos
             txtNombre.setText("");
             txtApellido.setText("");
             txtEmail.setText("");

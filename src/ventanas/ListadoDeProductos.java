@@ -1,5 +1,6 @@
 package ventanas;
 
+import clases.Buscar;
 import clases.Disennio;
 import clases.GestionProductos;
 import java.awt.Image;
@@ -13,7 +14,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class ListadoDeProductos extends javax.swing.JFrame {
 
-
+    private static int id;
+    
     public ListadoDeProductos() {
         initComponents();
         setLocationRelativeTo(null);
@@ -76,6 +78,11 @@ public class ListadoDeProductos extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tabla.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabla);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 646, 311));
@@ -83,7 +90,12 @@ public class ListadoDeProductos extends javax.swing.JFrame {
         botonActualizar.setText("Actualizar");
         getContentPane().add(botonActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 420, -1, -1));
 
-        botonInfo.setText("Informacio");
+        botonInfo.setText("Informacion");
+        botonInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonInfoActionPerformed(evt);
+            }
+        });
         getContentPane().add(botonInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 420, -1, -1));
 
         botonModif.setText("Modificar");
@@ -96,6 +108,29 @@ public class ListadoDeProductos extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
+      
+        if (evt.getClickCount() == 1) {
+           id = tabla.getSelectedRow();
+        }
+
+        Buscar selector = new Buscar();
+        selector.buscarProducto();
+        
+    }//GEN-LAST:event_tablaMouseClicked
+
+    private void botonInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonInfoActionPerformed
+        
+        new InformacionDelProducto().setVisible(true);
+        
+    }//GEN-LAST:event_botonInfoActionPerformed
+
+    public static int getId() {
+        return id;
+    }
+
+    
+    
     /**
      * @param args the command line arguments
      */

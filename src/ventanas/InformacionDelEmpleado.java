@@ -2,9 +2,13 @@
 package ventanas;
 
 import clases.Disennio;
-import clases.Metodos;
+import clases.Buscar;
+import clases.Modificar;
 import java.awt.Image;
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 
 /**
@@ -12,6 +16,8 @@ import javax.swing.ImageIcon;
  * @author luism
  */
 public class InformacionDelEmpleado extends javax.swing.JFrame {
+    
+    private static String[] modificar;
 
     /**
      * Creates new form InformacionDelEmpleado
@@ -28,7 +34,7 @@ public class InformacionDelEmpleado extends javax.swing.JFrame {
         labelWallpaper.setIcon(wallpaper);
         
         
-        String[] datos = Metodos.getDatos();
+        String[] datos = Buscar.getDatos();
         txtNombre.setText(datos[0]);
         txtApellido.setText(datos[1]);
         txtEmail.setText(datos[2]);
@@ -36,7 +42,6 @@ public class InformacionDelEmpleado extends javax.swing.JFrame {
         txtpassword.setText(datos[4]);
         txtTelf.setText(datos[5]);
         txtDireccion.setText(datos[6]);
-        System.out.println(Arrays.toString(datos));
         
         
         
@@ -74,6 +79,8 @@ public class InformacionDelEmpleado extends javax.swing.JFrame {
         txtUser = new javax.swing.JTextField();
         txtpassword = new javax.swing.JTextField();
         txtCategoria = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
         labelWallpaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -114,11 +121,51 @@ public class InformacionDelEmpleado extends javax.swing.JFrame {
         getContentPane().add(txtUser, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 90, 130, -1));
         getContentPane().add(txtpassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 130, 130, -1));
         getContentPane().add(txtCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 170, 130, -1));
+
+        jButton1.setText("Editar");
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 290, -1, -1));
+
+        jButton2.setText("Guardar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 290, -1, -1));
         getContentPane().add(labelWallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 470, 360));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
+        modificar = new String[7];
+        
+        modificar[0]= txtNombre.getText();
+        modificar[1]= txtApellido.getText();
+        modificar[2]= txtEmail.getText();
+        modificar[3]= txtUser.getText();
+        modificar[4]= txtpassword.getText();
+        modificar[5]= txtTelf.getText();
+        modificar[6]= txtDireccion.getText();
+        
+        try {
+            new Modificar().modificarUsuario();
+        } catch (IOException ex) {
+            Logger.getLogger(InformacionDelEmpleado.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        System.out.println("Ventana Iformacion: " + Arrays.toString(modificar));
+        
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    public static String[] getModificar() {
+        return modificar;
+    }
+
+    
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -155,6 +202,8 @@ public class InformacionDelEmpleado extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

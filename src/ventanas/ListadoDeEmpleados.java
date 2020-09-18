@@ -2,7 +2,7 @@ package ventanas;
 
 import clases.Disennio;
 import clases.GestionEmpleados;
-import clases.Metodos;
+import clases.Buscar;
 import java.awt.Image;
 import java.io.*;
 import java.util.logging.*;
@@ -141,8 +141,8 @@ public class ListadoDeEmpleados extends javax.swing.JFrame {
            id = tabla.getSelectedRow();
         }
 
-        Metodos seletor = new Metodos();
-        seletor.buscarEmpleado();
+        Buscar selector = new Buscar();
+        selector.buscarEmpleado();
         
         
     }//GEN-LAST:event_tablaMouseClicked

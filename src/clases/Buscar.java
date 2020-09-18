@@ -2,7 +2,6 @@ package clases;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Iterator;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -10,12 +9,13 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import ventanas.ListadoDeEmpleados;
+import ventanas.ListadoDeProductos;
 
 /**
  *
  * @author luism
  */
-public class Metodos {
+public class Buscar {
 
     private String nameFile = BaseDeDatos.getNOMBRE_ARCHIVO();
     private int id;
@@ -51,6 +51,35 @@ public class Metodos {
         }
 
     }
+    
+    public void buscarProducto(){
+        
+        try {
+            Workbook libro = WorkbookFactory.create(new FileInputStream(nameFile));
+            String nombreHoja = libro.getSheetName(1);
+            Sheet hoja = libro.getSheet(nombreHoja);
+
+            //recorre celda por celda
+            id = ListadoDeProductos.getId();
+            int index = 0;
+            Row fila = hoja.getRow(id);
+
+            datos = new String[fila.getLastCellNum()];
+            Iterator<Cell> cellIterator = fila.cellIterator();
+
+            while (cellIterator.hasNext()) {
+                Cell cell = cellIterator.next();
+
+                datos[index] = cell.getStringCellValue();
+                index += 1;
+
+            }
+
+        } catch (IOException ex) {
+            System.err.println("Error en la base de datos" + ex.getMessage());
+        }
+        
+    }
 
     public static String[] getDatos() {
         return datos;
@@ -59,7 +88,7 @@ public class Metodos {
     
 
     public static void main(String[] args) {
-//        Metodos prueba = new Metodos();
+//        Buscar prueba = new Buscar();
 //        prueba.buscarEmpleado();
 
     }
