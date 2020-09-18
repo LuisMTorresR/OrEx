@@ -29,6 +29,7 @@ public class ListadoDeEmpleados extends javax.swing.JFrame {
         labelWallpaper.setIcon(wallpaper);
 
         //Lenado de la tabla de Empleados
+        
         GestionEmpleados llenarTabla = new GestionEmpleados();
         llenarTabla.llenadoTablaEmpleados();
         DefaultTableModel modelo = llenarTabla.tableModel;

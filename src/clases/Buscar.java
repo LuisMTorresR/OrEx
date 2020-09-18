@@ -84,13 +84,5 @@ public class Buscar {
     public static String[] getDatos() {
         return datos;
     }
-    
-    
-
-    public static void main(String[] args) {
-//        Buscar prueba = new Buscar();
-//        prueba.buscarEmpleado();
-
-    }
 
 }

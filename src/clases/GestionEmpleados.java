@@ -48,6 +48,16 @@ public class GestionEmpleados {
     }
 
     public void llenadoTablaEmpleados() {
+        
+        tableModel.addColumn("NOMBRE");
+        tableModel.addColumn("APELLIDO");
+        tableModel.addColumn("EMAIL");
+        tableModel.addColumn("USERNAME");
+        tableModel.addColumn("PASSWORD");
+        tableModel.addColumn("TELEFONO");
+        tableModel.addColumn("DIRECCION");
+
+        
         try {
             Workbook libro = WorkbookFactory.create(new FileInputStream(nameFile));
             String nombreHoja = libro.getSheetName(0);
@@ -60,13 +70,10 @@ public class GestionEmpleados {
                     if (hoja.getRow(a).getLastCellNum() > maxCol) {
                         maxCol = hoja.getRow(a).getLastCellNum();
                     }
-                }
+                } 
             }
             if (maxCol > 0) {
-                //Añade encabezado a la tabla
-                for (int i = 1; i <= maxCol; i++) {
-                    tableModel.addColumn("Col." + i);
-                }
+                
                 //recorre fila por fila
                 Iterator<Row> rowIterator = hoja.iterator();
                 while (rowIterator.hasNext()) {
