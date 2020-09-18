@@ -99,6 +99,11 @@ public class ListadoDeProductos extends javax.swing.JFrame {
         getContentPane().add(botonInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 420, -1, -1));
 
         botonModif.setText("Modificar");
+        botonModif.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonModifActionPerformed(evt);
+            }
+        });
         getContentPane().add(botonModif, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 420, -1, -1));
 
         botonEliminar.setText("Eliminar");
@@ -124,6 +129,12 @@ public class ListadoDeProductos extends javax.swing.JFrame {
         new InformacionDelProducto().setVisible(true);
         
     }//GEN-LAST:event_botonInfoActionPerformed
+
+    private void botonModifActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModifActionPerformed
+     
+        new ModificarProducto().setVisible(true);
+        
+    }//GEN-LAST:event_botonModifActionPerformed
 
     public static int getId() {
         return id;

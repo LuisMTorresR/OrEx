@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Arrays;
 import java.util.Iterator;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -14,7 +13,8 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import ventanas.InformacionDelEmpleado;
 import ventanas.ListadoDeEmpleados;
-import ventanas.RegistrarDeEmpleado;
+import ventanas.ListadoDeProductos;
+import ventanas.ModificarProducto;
 
 /**
  *
@@ -33,24 +33,48 @@ public class Modificar {
 
         ListadoDeEmpleados num = new ListadoDeEmpleados();
         int id = num.getId();
-         int index = 0;
+        int index = 0;
         Row fila = hoja.getRow(id);
         Iterator<Cell> cellIterator = fila.cellIterator();
         while (cellIterator.hasNext()) {
-                Cell cell = cellIterator.next();
-                cell.setCellValue(datos[index]);
-                index += 1;
+            Cell cell = cellIterator.next();
+            cell.setCellValue(datos[index]);
+            index += 1;
 
-            }
-        
+        }
+
+        try (OutputStream fileOut = new FileOutputStream(nameFile)) {
+            libro.write(fileOut);
+            libro.close();
+        } catch (Exception e) {
+        }
+
+    }
+    
+    public void modificarProducto() throws FileNotFoundException, IOException{
+    
+        Workbook libro = WorkbookFactory.create(new FileInputStream(nameFile));
+        String nombreHoja = libro.getSheetName(1);
+        Sheet hoja = libro.getSheet(nombreHoja);
+        String[] datos = ModificarProducto.getModificar();
+
+        int id = ListadoDeProductos.getId();
+        int index = 0;
+        Row fila = hoja.getRow(id);
+        Iterator<Cell> cellIterator = fila.cellIterator();
+        while (cellIterator.hasNext()) {
+            Cell cell = cellIterator.next();
+            cell.setCellValue(datos[index]);
+            index += 1;
+
+        }
+
         try (OutputStream fileOut = new FileOutputStream(nameFile)) {
             libro.write(fileOut);
             libro.close();
         } catch (Exception e) {
         }
         
-        System.out.println("Calse modificar:" + Arrays.toString(datos));
-
-    }
+}
 
 }
