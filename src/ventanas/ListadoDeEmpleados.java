@@ -2,6 +2,7 @@ package ventanas;
 
 import clases.Disennio;
 import clases.GestionEmpleados;
+import clases.Metodos;
 import java.awt.Image;
 import java.io.*;
 import java.util.logging.*;
@@ -13,6 +14,8 @@ import javax.swing.table.DefaultTableModel;
  * @author luism
  */
 public class ListadoDeEmpleados extends javax.swing.JFrame {
+    
+    private static int id;
     
     public ListadoDeEmpleados() throws IOException {
         initComponents();
@@ -79,11 +82,21 @@ public class ListadoDeEmpleados extends javax.swing.JFrame {
 
             }
         ));
+        tabla.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabla);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 669, 275));
 
         botonInfo.setText("Informacion");
+        botonInfo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonInfoActionPerformed(evt);
+            }
+        });
         getContentPane().add(botonInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 397, -1, -1));
 
         botonEliminar.setText("Eliminar");
@@ -122,6 +135,30 @@ public class ListadoDeEmpleados extends javax.swing.JFrame {
 
     }//GEN-LAST:event_botonModificarActionPerformed
 
+    private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
+    
+        if (evt.getClickCount() == 1) {
+           id = tabla.getSelectedRow();
+        }
+
+        Metodos seletor = new Metodos();
+        seletor.buscarEmpleado();
+        
+        
+    }//GEN-LAST:event_tablaMouseClicked
+
+    private void botonInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonInfoActionPerformed
+        
+        new InformacionDelEmpleado().setVisible(true);
+        
+    }//GEN-LAST:event_botonInfoActionPerformed
+    
+    public int getId() {
+        return id;
+    }
+
+    
+    
     /**
      * @param args the command line arguments
      */

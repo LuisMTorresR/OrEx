@@ -52,6 +52,9 @@
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tablaMouseClicked"/>
+          </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="tabla = new javax.swing.JTable(){&#xa;  public boolean isCellEditable(int row,int col){&#xa;    for(int i = 0; i&lt;tabla.getRowCount(); i++){&#xa;      if(row==i){&#xa;        return false;&#xa;      }   &#xa;    }&#xa;    return true;&#xa;  }&#xa;};"/>
           </AuxValues>
@@ -62,6 +65,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Informacion"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="botonInfoActionPerformed"/>
+      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="70" y="397" width="-1" height="-1"/>
