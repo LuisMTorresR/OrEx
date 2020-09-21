@@ -2,12 +2,15 @@ package clases;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Iterator;
+import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
+import ventanas.Caja;
 import ventanas.ListadoDeEmpleados;
 import ventanas.ListadoDeProductos;
 
@@ -22,7 +25,6 @@ public class Buscar {
     private static String[] datos;
 
     public void buscarEmpleado() {
-        
 
         try {
             Workbook libro = WorkbookFactory.create(new FileInputStream(nameFile));
@@ -51,9 +53,10 @@ public class Buscar {
         }
 
     }
-    
-    public void buscarProducto(){
-        
+
+    //buscar producto por ID
+    public void buscarProducto() {
+
         try {
             Workbook libro = WorkbookFactory.create(new FileInputStream(nameFile));
             String nombreHoja = libro.getSheetName(1);
@@ -78,11 +81,57 @@ public class Buscar {
         } catch (IOException ex) {
             System.err.println("Error en la base de datos" + ex.getMessage());
         }
-        
+
+    }
+
+    //buscar producto por codigo
+    public void buscarCodigo() {
+
+        try {
+            Workbook libro = WorkbookFactory.create(new FileInputStream(nameFile));
+            String nombreHoja = libro.getSheetName(1);
+            Sheet hoja = libro.getSheet(nombreHoja);
+            String codigo;
+
+            Iterator<Row> rowIterator = hoja.iterator();
+            String codigoCaja = Caja.getCodigo();
+            while (rowIterator.hasNext()) {
+                Row fila = rowIterator.next();
+                Cell celda = fila.getCell(0);
+                codigo = celda.getStringCellValue();
+
+                if (codigo.equals(codigoCaja)) {
+                    id = celda.getRowIndex();
+                }
+            }
+            int index = 0;
+            Row fila = hoja.getRow(id);
+
+            datos = new String[fila.getLastCellNum()];
+            Iterator<Cell> cellIterator = fila.cellIterator();
+
+            while (cellIterator.hasNext()) {
+                Cell cell = cellIterator.next();
+
+                datos[index] = cell.getStringCellValue();
+                index += 1;
+
+            }
+
+        } catch (IOException | EncryptedDocumentException e) {
+        }
+
     }
 
     public static String[] getDatos() {
         return datos;
+    }
+
+    public static void main(String[] args) {
+
+        Buscar prueba = new Buscar();
+        prueba.buscarCodigo();
+
     }
 
 }

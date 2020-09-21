@@ -1,14 +1,29 @@
 package ventanas;
 
+import clases.Buscar;
 import clases.Disennio;
 import java.awt.Image;
+import java.awt.event.KeyEvent;
+import java.util.Arrays;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author luism
  */
 public class Caja extends javax.swing.JFrame {
+
+    private static String codigo;
+    private String[] datos;
+    private String codg;
+    private String nombre;
+    private String marca;
+    private String precio;
+    private String cantidad;
+    private int total;
+    DefaultTableModel tableModel;
 
     /**
      * Creates new form Caja
@@ -23,8 +38,14 @@ public class Caja extends javax.swing.JFrame {
         ImageIcon wallpaper = new ImageIcon(new ImageIcon(wallpaperUrl.getWallpaper()).getImage()
                 .getScaledInstance(labelWallpaper.getWidth(), labelWallpaper.getHeight(), Image.SCALE_DEFAULT));
         labelWallpaper.setIcon(wallpaper);
+        
+        tableModel = new DefaultTableModel();
+        tableModel.addColumn("Nombre");
+        tableModel.addColumn("Marca");
+        tableModel.addColumn("Cantidad");
+        tableModel.addColumn("Prec. Unt.");
     }
-    
+
     @Override
     public Image getIconImage() {
         Disennio icono = new Disennio();
@@ -45,26 +66,40 @@ public class Caja extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtCantidad = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tabla = new javax.swing.JTable();
         jButton1 = new javax.swing.JButton();
         labelTotal = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         botonDetalle = new javax.swing.JButton();
+        botonagregar = new javax.swing.JButton();
         labelWallpaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
+        setPreferredSize(new java.awt.Dimension(710, 610));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setText("Codigo");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 34, -1, -1));
+
+        txtCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCodigoKeyReleased(evt);
+            }
+        });
         getContentPane().add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 54, 111, -1));
 
         jLabel3.setText("Cantidad");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(237, 34, -1, -1));
+
+        txtCantidad.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCantidadKeyReleased(evt);
+            }
+        });
         getContentPane().add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(237, 54, 70, -1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -75,7 +110,7 @@ public class Caja extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tabla);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 92, 474, -1));
 
@@ -91,11 +126,83 @@ public class Caja extends javax.swing.JFrame {
         botonDetalle.setText("Detalle");
         getContentPane().add(botonDetalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 540, -1, -1));
 
+        botonagregar.setText("Agregar");
+        botonagregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonagregarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botonagregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 50, -1, -1));
+
         labelWallpaper.setText("jLabel1");
         getContentPane().add(labelWallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(-7, -5, 710, 610));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void botonagregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonagregarActionPerformed
+
+        if (txtCodigo.getText().equals("") || txtCantidad.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Debe introducir un codigo");
+        } else {
+            codigo = txtCodigo.getText();
+            new Buscar().buscarCodigo();
+            datos = Buscar.getDatos();
+            
+            codg = datos[0];
+            nombre = datos[1];
+            marca = datos[2];
+            precio = datos[3];
+            cantidad = datos[4];
+        }
+        
+        
+        String cantidades = String.valueOf(txtCantidad.getText());
+        int cantidadesNum = Integer.parseInt(cantidades);
+        int precioFinal = Integer.parseInt(precio);
+        
+        if(cantidadesNum > 1){
+           precioFinal = precioFinal * cantidadesNum;
+        }
+        
+        total = total + precioFinal;
+        labelTotal.setText("Total:  " + String.valueOf(total));
+        
+        
+        String[] articulo = new String[4];
+        articulo[0] = nombre;
+        articulo[1] = marca;
+        articulo[2] = cantidades;
+        articulo[3] = precio;
+        
+        tableModel.addRow(articulo);
+        tabla.setModel(tableModel);
+        
+        txtCodigo.setText("");
+        txtCantidad.setText("");
+
+
+    }//GEN-LAST:event_botonagregarActionPerformed
+
+    private void txtCodigoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoKeyReleased
+
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            botonagregar.doClick();
+        }
+    }//GEN-LAST:event_txtCodigoKeyReleased
+
+    private void txtCantidadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyReleased
+ 
+         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            botonagregar.doClick();
+        }
+        
+    }//GEN-LAST:event_txtCantidadKeyReleased
+
+    
+    public static String getCodigo() {
+        return codigo;
+    }
 
     /**
      * @param args the command line arguments
@@ -134,15 +241,16 @@ public class Caja extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonDetalle;
+    private javax.swing.JButton botonagregar;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JLabel labelTotal;
     private javax.swing.JLabel labelWallpaper;
+    private javax.swing.JTable tabla;
     private javax.swing.JTextField txtCantidad;
-    private javax.swing.JTextField txtCodigo;
+    private static javax.swing.JTextField txtCodigo;
     // End of variables declaration//GEN-END:variables
 }
