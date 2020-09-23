@@ -28,6 +28,8 @@ public class Administrador extends javax.swing.JFrame {
         ImageIcon wallpaper = new ImageIcon(new ImageIcon(wallpaperUrl.getWallpaper()).getImage()
                 .getScaledInstance(labelWallpaper.getWidth(), labelWallpaper.getHeight(), Image.SCALE_DEFAULT));
         labelWallpaper.setIcon(wallpaper);
+        
+        new PrecioDolar().setVisible(true);
     }
     
     @Override
@@ -175,21 +177,25 @@ public class Administrador extends javax.swing.JFrame {
     private void botonGestionProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGestionProductoActionPerformed
        
         new ListadoDeProductos().setVisible(true);
+        
     }//GEN-LAST:event_botonGestionProductoActionPerformed
 
     private void botonInventarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonInventarioActionPerformed
         
         new Inventario().setVisible(true);
+        
     }//GEN-LAST:event_botonInventarioActionPerformed
 
     private void bontonVentasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bontonVentasActionPerformed
         
         new Ventas().setVisible(true);
+        
     }//GEN-LAST:event_bontonVentasActionPerformed
 
     private void botonCajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCajaActionPerformed
         
         new Caja().setVisible(true);
+        
     }//GEN-LAST:event_botonCajaActionPerformed
 
     /**

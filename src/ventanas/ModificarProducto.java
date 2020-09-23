@@ -17,6 +17,7 @@ import javax.swing.ImageIcon;
 public class ModificarProducto extends javax.swing.JFrame {
     
     private static String[] modificar;
+    private int dolar = PrecioDolar.getDolar();
 
     /**
      * Creates new form ModificarProducto
@@ -36,8 +37,10 @@ public class ModificarProducto extends javax.swing.JFrame {
         txtCodigo.setText(datos[0]);
         txtNombre.setText(datos[1]);
         txtMarca.setText(datos[2]);
-        txtPrecio.setText(datos[3]);
-        txtCantidad.setText(datos[4]);
+        txtPrecioCosto.setText(datos[3]);
+        txtPrecioDoll.setText(datos[4]);
+        txtPrecioBs.setText(datos[5]);
+        txtCantidad.setText(datos[6]);
     }
     
     @Override
@@ -55,6 +58,7 @@ public class ModificarProducto extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel8 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -64,38 +68,59 @@ public class ModificarProducto extends javax.swing.JFrame {
         txtCodigo = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
         txtMarca = new javax.swing.JTextField();
-        txtPrecio = new javax.swing.JTextField();
+        txtPrecioCosto = new javax.swing.JTextField();
         txtCantidad = new javax.swing.JTextField();
         jButtonGuardar = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        botonEditar = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        txtPrecioBs = new javax.swing.JTextField();
+        txtPrecioDoll = new javax.swing.JTextField();
         labelWallpaper = new javax.swing.JLabel();
+
+        jLabel8.setText("jLabel8");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
         jLabel1.setText("Modificar Producto");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 20, -1, -1));
 
         jLabel2.setText("Codigo");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 70, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, -1, -1));
 
         jLabel3.setText("Nombre");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 116, -1, -1));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 90, -1, -1));
 
         jLabel4.setText("Marca");
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 167, -1, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 180, -1, -1));
 
-        jLabel5.setText("Precio");
-        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 225, -1, -1));
+        jLabel5.setText("Precio Costo");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 180, -1, -1));
 
         jLabel6.setText("Cantidad");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 281, -1, -1));
-        getContentPane().add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(101, 67, 162, -1));
-        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(101, 113, 162, -1));
-        getContentPane().add(txtMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(101, 164, 162, -1));
-        getContentPane().add(txtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 220, 162, -1));
-        getContentPane().add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(101, 278, 162, -1));
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 290, -1, -1));
+
+        txtCodigo.setEditable(false);
+        getContentPane().add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 110, 162, -1));
+
+        txtNombre.setEditable(false);
+        getContentPane().add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 110, 162, -1));
+
+        txtMarca.setEditable(false);
+        getContentPane().add(txtMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 200, 162, -1));
+
+        txtPrecioCosto.setEditable(false);
+        txtPrecioCosto.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtPrecioCostoKeyReleased(evt);
+            }
+        });
+        getContentPane().add(txtPrecioCosto, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 200, 162, -1));
+
+        txtCantidad.setEditable(false);
+        getContentPane().add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 310, 162, -1));
 
         jButtonGuardar.setText("Guardar");
         jButtonGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -103,24 +128,43 @@ public class ModificarProducto extends javax.swing.JFrame {
                 jButtonGuardarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 330, -1, -1));
+        getContentPane().add(jButtonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 410, 80, 60));
 
-        jButton2.setText("Editar");
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, -1, -1));
-        getContentPane().add(labelWallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(-7, -8, 320, 380));
+        botonEditar.setText("Editar");
+        botonEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonEditarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botonEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 410, 80, 60));
+
+        jLabel7.setText("Precio Venta en Bs");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 400, -1, -1));
+
+        jLabel9.setText("Precio Venta en $");
+        getContentPane().add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 290, -1, -1));
+
+        txtPrecioBs.setEditable(false);
+        getContentPane().add(txtPrecioBs, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 420, 160, -1));
+
+        txtPrecioDoll.setEditable(false);
+        getContentPane().add(txtPrecioDoll, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 310, 160, -1));
+        getContentPane().add(labelWallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 740, 550));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         
-          modificar = new String[5];
+          modificar = new String[7];
         
         modificar[0]= txtCodigo.getText();
         modificar[1]= txtNombre.getText();
         modificar[2]= txtMarca.getText();
-        modificar[3]= txtPrecio.getText();
-        modificar[4]= txtCantidad.getText();
+        modificar[3]= txtPrecioCosto.getText();
+        modificar[4]= txtPrecioDoll.getText();
+        modificar[5]= txtPrecioBs.getText();
+        modificar[6]= txtCantidad.getText();
 
         
         try {
@@ -129,6 +173,28 @@ public class ModificarProducto extends javax.swing.JFrame {
             Logger.getLogger(ModificarProducto.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButtonGuardarActionPerformed
+
+    private void botonEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEditarActionPerformed
+        
+        txtCodigo.setEditable(true);
+        txtNombre.setEditable(true);
+        txtMarca.setEditable(true);
+        txtPrecioCosto.setEditable(true);
+        txtCantidad.setEditable(true);
+        
+    }//GEN-LAST:event_botonEditarActionPerformed
+
+    private void txtPrecioCostoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPrecioCostoKeyReleased
+        
+       String numero = txtPrecioCosto.getText();
+       
+       if(numero.equals("")== false && numero.matches("[0-9]*")){
+           Double num = Double.parseDouble(numero);
+           txtPrecioDoll.setText(String.valueOf(num + (num * 0.30)));
+           txtPrecioBs.setText(String.valueOf((int)(Double.parseDouble(txtPrecioDoll.getText()) * dolar)));
+       }
+        
+    }//GEN-LAST:event_txtPrecioCostoKeyReleased
 
     public static String[] getModificar() {
         return modificar;
@@ -172,7 +238,7 @@ public class ModificarProducto extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton2;
+    private javax.swing.JButton botonEditar;
     private javax.swing.JButton jButtonGuardar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -180,11 +246,16 @@ public class ModificarProducto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JLabel labelWallpaper;
     private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtMarca;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtPrecio;
+    private javax.swing.JTextField txtPrecioBs;
+    private javax.swing.JTextField txtPrecioCosto;
+    private javax.swing.JTextField txtPrecioDoll;
     // End of variables declaration//GEN-END:variables
 }

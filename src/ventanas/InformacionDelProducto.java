@@ -15,7 +15,8 @@ import javax.swing.ImageIcon;
  * @author luism
  */
 public class InformacionDelProducto extends javax.swing.JFrame {
-
+    
+    private double dolar = PrecioDolar.getDolar();
     /**
      * Creates new form InformacionDelProducto
      */
@@ -30,18 +31,33 @@ public class InformacionDelProducto extends javax.swing.JFrame {
                 .getScaledInstance(labelWallpaper.getWidth(), labelWallpaper.getHeight(), Image.SCALE_DEFAULT));
         labelWallpaper.setIcon(wallpaper);
         
-        String[] datos = Buscar.getDatos();
-        txtCodigo.setText(datos[0]);
-        txtNombre.setText(datos[1]);
-        txtMarca.setText(datos[2]);
-        txtPrecio.setText(datos[3]);
-        txtCantidad.setText(datos[4]);
+        
+        cargarInformacion();
+        calcularBs();
+        
     }
     
     @Override
     public Image getIconImage() {
         Disennio icono = new Disennio();
         return icono.getIconImage();
+    }
+    
+    public void cargarInformacion(){
+        
+        String[] datos = Buscar.getDatos();
+        txtCodigo.setText(datos[0]);
+        txtNombre.setText(datos[1]);
+        txtMarca.setText(datos[2]);
+        txtPrecioenDoll.setText(datos[4]);
+    }
+    
+    public void calcularBs(){
+        double numero = Double.parseDouble(txtPrecioenDoll.getText());
+        double num = dolar * numero;
+        String precioBs = String.valueOf((int) num);
+        txtPrecioBs.setText(precioBs);
+        
     }
 
     /**
@@ -58,12 +74,12 @@ public class InformacionDelProducto extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
         txtMarca = new javax.swing.JTextField();
-        txtPrecio = new javax.swing.JTextField();
-        txtCantidad = new javax.swing.JTextField();
+        txtPrecioenDoll = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        txtPrecioBs = new javax.swing.JTextField();
         labelWallpaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -82,11 +98,8 @@ public class InformacionDelProducto extends javax.swing.JFrame {
         jLabel4.setText("Marca");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, -1, -1));
 
-        jLabel5.setText("Precio");
+        jLabel5.setText("Precio en $");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, -1, -1));
-
-        jLabel6.setText("Cantidad");
-        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, -1, -1));
 
         txtCodigo.setEditable(false);
         getContentPane().add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 70, 130, -1));
@@ -97,12 +110,15 @@ public class InformacionDelProducto extends javax.swing.JFrame {
         txtMarca.setEditable(false);
         getContentPane().add(txtMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 190, 130, -1));
 
-        txtPrecio.setEditable(false);
-        getContentPane().add(txtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 130, -1));
+        txtPrecioenDoll.setEditable(false);
+        getContentPane().add(txtPrecioenDoll, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 130, -1));
 
-        txtCantidad.setEditable(false);
-        getContentPane().add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 310, 130, -1));
-        getContentPane().add(labelWallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(-6, -1, 330, 400));
+        jLabel7.setText("Precio en Bs");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, -1, -1));
+
+        txtPrecioBs.setEditable(false);
+        getContentPane().add(txtPrecioBs, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 310, 130, -1));
+        getContentPane().add(labelWallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(-6, -1, 330, 440));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -148,12 +164,12 @@ public class InformacionDelProducto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel labelWallpaper;
-    private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtMarca;
     private javax.swing.JTextField txtNombre;
-    private javax.swing.JTextField txtPrecio;
+    private javax.swing.JTextField txtPrecioBs;
+    private javax.swing.JTextField txtPrecioenDoll;
     // End of variables declaration//GEN-END:variables
 }

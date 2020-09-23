@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.Iterator;
+import javax.swing.JOptionPane;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -72,6 +73,7 @@ public class Modificar {
         try (OutputStream fileOut = new FileOutputStream(nameFile)) {
             libro.write(fileOut);
             libro.close();
+            JOptionPane.showMessageDialog(null, "Producto Modificado");
         } catch (Exception e) {
         }
         
