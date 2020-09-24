@@ -121,11 +121,10 @@ public class RegistrarProducto extends javax.swing.JFrame {
             String marca = txtMarca.getText();
             String precioCosto = txtPrecioCosto.getText();
             String precioVentaDol = String.valueOf(Double.parseDouble(precioCosto) + (Double.parseDouble(precioCosto) * 0.30));
-            String precioVentaBs = String.valueOf((int)(Double.parseDouble(precioVentaDol) * dolar));
             String cantidad = txtCantidad.getText();
            
             datos = new String[][]{
-                {codigo, nombre, marca, precioCosto, precioVentaDol, precioVentaBs, cantidad}};
+                {codigo, nombre, marca, precioCosto, precioVentaDol, cantidad}};
             
                     
             try {

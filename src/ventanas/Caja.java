@@ -1,5 +1,6 @@
 package ventanas;
 
+import clases.ActualizacionDeStock;
 import clases.Buscar;
 import clases.Disennio;
 import java.awt.Image;
@@ -14,18 +15,17 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Caja extends javax.swing.JFrame {
 
-    private double dolar = PrecioDolar.getDolar();
+    private float dolar = PrecioDolar.getDolar();
     private static String codigo;
     private String[] datos;
-    private String codg;
     private String nombre;
     private String marca;
-    private String precioDoll;
-    private String precioBs;
+    private String precioUnitarioDolares;
     private String cantidad;
-    private double totalDoll;
-    private double totalBs;
-    DefaultTableModel tableModel;
+    private String cantidades;
+    private float preciofloatDolares;
+    private float precioDoubleBs;
+    private static DefaultTableModel tableModel;
 
     /**
      * Creates new form Caja
@@ -56,10 +56,84 @@ public class Caja extends javax.swing.JFrame {
         tableModel.addColumn("Nombre");
         tableModel.addColumn("Marca");
         tableModel.addColumn("Cantidad");
-        tableModel.addColumn("Precio $.");
-        tableModel.addColumn("Precio Bs.");
-        
+        tableModel.addColumn("PrecioUnit $.");
+        tableModel.addColumn("Total $.");
+        tableModel.addColumn("PrecioUnit Bs.");
+        tableModel.addColumn("Total Bs.");
+
         tabla.setModel(tableModel);
+    }
+
+    public void cargarProducto() {
+
+        codigo = txtCodigo.getText();
+        new Buscar().buscarCodigo();
+        datos = Buscar.getDatos();
+
+        nombre = datos[1];
+        marca = datos[2];
+        precioUnitarioDolares = datos[4];
+        cantidad = datos[5];
+
+        cantidades = String.valueOf(txtCantidad.getText());
+        float cantidadesNum = Float.parseFloat(cantidades);
+        preciofloatDolares = Float.parseFloat(precioUnitarioDolares);
+        precioDoubleBs = preciofloatDolares * dolar;
+
+        if (cantidadesNum > 1) {
+            preciofloatDolares = preciofloatDolares * cantidadesNum;
+            precioDoubleBs = precioDoubleBs * cantidadesNum;
+        }
+
+        //Tabla de ventas
+        String [] articulos = new String[7];
+        articulos[0] = nombre;
+        articulos[1] = marca;
+        articulos[2] = cantidades;
+        articulos[3] = precioUnitarioDolares;
+        articulos[4] = String.valueOf(Float.parseFloat(precioUnitarioDolares) * cantidadesNum);
+        articulos[5] = String.valueOf((int) (Double.parseDouble(precioUnitarioDolares) * dolar));
+        articulos[6] = String.valueOf((int) (((Double.parseDouble(precioUnitarioDolares) * dolar)) * cantidadesNum));
+
+        tableModel.addRow(articulos);
+        tabla.setModel(tableModel);
+
+        txtCodigo.setText("");
+        txtCantidad.setText("");
+        verificarStock();
+
+    }
+    
+    public void verificarStock(){
+        if(Integer.parseInt(cantidades) > Integer.parseInt(cantidad)){
+            int fila = tableModel.getRowCount() - 1;
+            tableModel.removeRow(fila);
+            JOptionPane.showMessageDialog(null, "No hay stock");
+            
+        }
+    }
+
+    public void totalCobrar() {
+
+        double t = 0;
+        double p = 0;
+
+        if (tabla.getRowCount() > 0) {
+            for (int i = 0; i < tabla.getRowCount(); i++) {
+                p = Float.parseFloat(tabla.getValueAt(i, 4).toString());
+                t += p;
+            }
+            labelTotalDoll.setText("Total $: " + (float) t);
+        }
+
+        if (tabla.getRowCount() > 0) {
+            for (int i = 0; i < tabla.getRowCount(); i++) {
+                p = Double.parseDouble(tabla.getValueAt(i, 6).toString());
+                t += p;
+            }
+            labelTotalBs.setText("Total Bs: " + (int) t);
+        }
+
     }
 
     /**
@@ -77,7 +151,7 @@ public class Caja extends javax.swing.JFrame {
         txtCantidad = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
-        jButton1 = new javax.swing.JButton();
+        botonEliminar = new javax.swing.JButton();
         labelTotalDoll = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         botonDetalle = new javax.swing.JButton();
@@ -87,7 +161,8 @@ public class Caja extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
-        setPreferredSize(new java.awt.Dimension(710, 610));
+        setPreferredSize(new java.awt.Dimension(840, 670));
+        setSize(new java.awt.Dimension(800, 650));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setText("Codigo");
@@ -123,24 +198,35 @@ public class Caja extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tabla);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 92, 474, -1));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 750, -1));
 
-        jButton1.setText("Eliminar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        botonEliminar.setText("Eliminar");
+        botonEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                botonEliminarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(39, 542, -1, -1));
+        getContentPane().add(botonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 570, -1, -1));
 
+        labelTotalDoll.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         labelTotalDoll.setText("Total $: ");
-        getContentPane().add(labelTotalDoll, new org.netbeans.lib.awtextra.AbsoluteConstraints(548, 92, 130, 30));
+        getContentPane().add(labelTotalDoll, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 530, 350, 30));
 
         jButton2.setText("Cobrar");
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 220, -1, -1));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 570, -1, -1));
 
         botonDetalle.setText("Detalle");
-        getContentPane().add(botonDetalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 540, -1, -1));
+        botonDetalle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonDetalleActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botonDetalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 570, -1, -1));
 
         botonagregar.setText("Agregar");
         botonagregar.addActionListener(new java.awt.event.ActionListener() {
@@ -148,13 +234,12 @@ public class Caja extends javax.swing.JFrame {
                 botonagregarActionPerformed(evt);
             }
         });
-        getContentPane().add(botonagregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 50, -1, -1));
+        getContentPane().add(botonagregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 50, -1, -1));
 
+        labelTotalBs.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         labelTotalBs.setText("Total Bs:");
-        getContentPane().add(labelTotalBs, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 150, 130, 30));
-
-        labelWallpaper.setText("jLabel1");
-        getContentPane().add(labelWallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(-7, -5, 710, 610));
+        getContentPane().add(labelTotalBs, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 580, 360, 30));
+        getContentPane().add(labelWallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 680));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -162,9 +247,10 @@ public class Caja extends javax.swing.JFrame {
     private void botonagregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonagregarActionPerformed
 
         if (txtCodigo.getText().equals("") || txtCantidad.getText().equals("")) {
-            JOptionPane.showMessageDialog(null, "Debe introducir un codigo");
+            JOptionPane.showMessageDialog(null, "Debe llenar los campos");
         } else {
             cargarProducto();
+            totalCobrar();
         }
 
 
@@ -186,57 +272,34 @@ public class Caja extends javax.swing.JFrame {
 
     }//GEN-LAST:event_txtCantidadKeyReleased
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
         int fila = tabla.getSelectedRow();
         tableModel.removeRow(fila);
+        totalCobrar();
+
+    }//GEN-LAST:event_botonEliminarActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+
+        //clumna
+        //fila
+
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void botonDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonDetalleActionPerformed
         
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    public void cargarProducto() {
-
-        codigo = txtCodigo.getText();
-        new Buscar().buscarCodigo();
-        datos = Buscar.getDatos();
-
-        codg = datos[0];
-        nombre = datos[1];
-        marca = datos[2];
-        precioDoll = datos[4];
-        cantidad = datos[5];
-
-        String cantidades = String.valueOf(txtCantidad.getText());
-        double cantidadesNum = Double.parseDouble(cantidades);
-        double precioFinalDoll = Double.parseDouble(precioDoll);
-        double precioFinalBs = precioFinalDoll * dolar;
-
-        if (cantidadesNum > 1) {
-            precioFinalDoll = precioFinalDoll * cantidadesNum;
-            precioFinalBs = precioFinalBs * cantidadesNum;
-        }
-
-        totalDoll =  totalDoll + precioFinalDoll;
-        totalBs =  (totalBs + precioFinalBs);
-        labelTotalDoll.setText("Total $:  " + String.valueOf(totalDoll));
-        labelTotalBs.setText("Total Bs: "+ String.valueOf((int)totalBs));
-
-        //Tabla de ventas
-        String[] articulo = new String[5];
-        articulo[0] = nombre;
-        articulo[1] = marca;
-        articulo[2] = cantidades;
-        articulo[3] = precioDoll;
-        articulo[4] = String.valueOf((int)(Double.parseDouble(precioDoll) * dolar));
-
-        tableModel.addRow(articulo);
-        tabla.setModel(tableModel);
-
-        txtCodigo.setText("");
-        txtCantidad.setText("");
-    }
+ 
+        
+    }//GEN-LAST:event_botonDetalleActionPerformed
 
     public static String getCodigo() {
         return codigo;
     }
+
+    public static DefaultTableModel getTableModel() {
+        return tableModel;
+    }
+    
 
     /**
      * @param args the command line arguments
@@ -275,8 +338,8 @@ public class Caja extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonDetalle;
+    private javax.swing.JButton botonEliminar;
     private javax.swing.JButton botonagregar;
-    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
