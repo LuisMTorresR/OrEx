@@ -4,6 +4,7 @@ import clases.ActualizacionDeStock;
 import clases.Buscar;
 import clases.Disennio;
 import clases.Modificar;
+import clases.VentasClass;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
@@ -28,6 +29,7 @@ public class Caja extends javax.swing.JFrame {
     private float preciofloatDolares;
     private float precioDoubleBs;
     private static DefaultTableModel tableModel;
+    private int fila;
 
     public Caja() {
         initComponents();
@@ -152,7 +154,7 @@ public class Caja extends javax.swing.JFrame {
         tabla = new javax.swing.JTable();
         botonEliminar = new javax.swing.JButton();
         labelTotalDoll = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
+        botonCobrar = new javax.swing.JButton();
         botonDetalle = new javax.swing.JButton();
         botonagregar = new javax.swing.JButton();
         labelTotalBs = new javax.swing.JLabel();
@@ -187,6 +189,16 @@ public class Caja extends javax.swing.JFrame {
         });
         getContentPane().add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(237, 54, 70, -1));
 
+        tabla = new javax.swing.JTable(){
+            public boolean isCellEditable(int row,int col){
+                for(int i = 0; i<tabla.getRowCount(); i++){
+                    if(row==i){
+                        return false;
+                    }
+                }
+                return true;
+            }
+        };
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -198,11 +210,16 @@ public class Caja extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tabla.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tabla);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 750, -1));
 
-        botonEliminar.setBackground(new java.awt.Color(102, 102, 102));
+        botonEliminar.setBackground(new java.awt.Color(51, 51, 51));
         botonEliminar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         botonEliminar.setForeground(new java.awt.Color(255, 255, 255));
         botonEliminar.setText("Eliminar");
@@ -219,18 +236,18 @@ public class Caja extends javax.swing.JFrame {
         labelTotalDoll.setText("Total $: ");
         getContentPane().add(labelTotalDoll, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 530, 350, 30));
 
-        jButton2.setBackground(new java.awt.Color(102, 102, 102));
-        jButton2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("Cobrar");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        botonCobrar.setBackground(new java.awt.Color(51, 51, 51));
+        botonCobrar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        botonCobrar.setForeground(new java.awt.Color(255, 255, 255));
+        botonCobrar.setText("Cobrar");
+        botonCobrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                botonCobrarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 570, 100, 40));
+        getContentPane().add(botonCobrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 570, 100, 40));
 
-        botonDetalle.setBackground(new java.awt.Color(102, 102, 102));
+        botonDetalle.setBackground(new java.awt.Color(51, 51, 51));
         botonDetalle.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         botonDetalle.setForeground(new java.awt.Color(255, 255, 255));
         botonDetalle.setText("Detalle");
@@ -241,7 +258,7 @@ public class Caja extends javax.swing.JFrame {
         });
         getContentPane().add(botonDetalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 570, 100, 40));
 
-        botonagregar.setBackground(new java.awt.Color(102, 102, 102));
+        botonagregar.setBackground(new java.awt.Color(51, 51, 51));
         botonagregar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         botonagregar.setForeground(new java.awt.Color(255, 255, 255));
         botonagregar.setText("Agregar");
@@ -306,8 +323,8 @@ public class Caja extends javax.swing.JFrame {
     private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
 
         int num = JOptionPane.showConfirmDialog(null, "Realmente desea eliminar el producto?", "Eliminar Producto", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+
         if (num == 0) {
-            int fila = tabla.getSelectedRow();
             tableModel.removeRow(fila);
             totalCobrar();
         }
@@ -318,15 +335,26 @@ public class Caja extends javax.swing.JFrame {
     }//GEN-LAST:event_botonEliminarActionPerformed
 
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+    private void botonCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCobrarActionPerformed
 
-    }//GEN-LAST:event_jButton2ActionPerformed
+        new VentasClass().ventasDiarias();
+        tableModel = null;
+        
+    }//GEN-LAST:event_botonCobrarActionPerformed
 
 
     private void botonDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonDetalleActionPerformed
 
 
     }//GEN-LAST:event_botonDetalleActionPerformed
+
+    private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
+        
+       if (evt.getClickCount() == 1) {
+            fila = tabla.getSelectedRow();
+        }
+        
+    }//GEN-LAST:event_tablaMouseClicked
 
     public static String getCodigo() {
         return codigo;
@@ -376,10 +404,10 @@ public class Caja extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton botonCobrar;
     private javax.swing.JButton botonDetalle;
     private javax.swing.JButton botonEliminar;
     private javax.swing.JButton botonagregar;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;

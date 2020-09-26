@@ -29,7 +29,6 @@ public class Administrador extends javax.swing.JFrame {
                 .getScaledInstance(labelWallpaper.getWidth(), labelWallpaper.getHeight(), Image.SCALE_DEFAULT));
         labelWallpaper.setIcon(wallpaper);
         
-        new PrecioDolar().setVisible(true);
     }
     
     @Override

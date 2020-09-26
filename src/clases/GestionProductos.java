@@ -5,7 +5,6 @@ import java.util.Iterator;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.apache.poi.ss.usermodel.*;
-import ventanas.ListadoDeProductos;
 import ventanas.RegistrarProducto;
 
 /**

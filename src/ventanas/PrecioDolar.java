@@ -74,7 +74,6 @@ public class PrecioDolar extends javax.swing.JFrame {
         
         dolar = Integer.parseInt(txtPrecioDolar.getText());
         this.setVisible(false);
-        
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public static int getDolar() {
