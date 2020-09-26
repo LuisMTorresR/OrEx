@@ -10,7 +10,7 @@ import javax.swing.*;
 public class Disennio {
     
     private String logo = "src/images/Logo.png";
-    private String wallpaper = "src/images/Fondo.jpg";
+    private String wallpaper = "src/images/39908-azul-solido.jpg";
     
         public Disennio() {
     }

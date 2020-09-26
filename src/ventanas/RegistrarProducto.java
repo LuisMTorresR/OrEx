@@ -57,27 +57,36 @@ public class RegistrarProducto extends javax.swing.JFrame {
         txtCantidad = new javax.swing.JTextField();
         labelWallpaper = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setIconImage(getIconImage());
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Mongolian Baiti", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Registrar Producto");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 20, -1, -1));
 
+        jLabel2.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Codigo");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, -1, -1));
 
+        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setText("Nombre");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 180, -1, -1));
 
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Marca");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, -1, -1));
 
+        jLabel5.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setText("Precio Costo");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 320, -1, -1));
 
-        jButtonRegistrar.setText("Registrar");
+        jButtonRegistrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/add-file.png"))); // NOI18N
         jButtonRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonRegistrarActionPerformed(evt);
@@ -85,6 +94,8 @@ public class RegistrarProducto extends javax.swing.JFrame {
         });
         getContentPane().add(jButtonRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 220, 90, 90));
 
+        jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setText("Cantidad");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 390, -1, -1));
         getContentPane().add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, 190, -1));
@@ -99,21 +110,21 @@ public class RegistrarProducto extends javax.swing.JFrame {
 
     private void jButtonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistrarActionPerformed
 
-       this.registrarProducto();
+       registrarProducto();
        new GestionProductos().llenadoTablaProductos();
 
     }//GEN-LAST:event_jButtonRegistrarActionPerformed
 
     public void registrarProducto(){
-        if (txtCodigo.getText() == null) {
+        if (txtCodigo.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Debes completar todos los campos");
-        } else if (txtNombre.getText() == null) {
+        } else if (txtNombre.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Debes completar todos los campos");
-        } else if (txtMarca.getText() == null) {
+        } else if (txtMarca.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Debes completar todos los campos");
-        } else if (txtCantidad.getText() == null) {
+        } else if (txtCantidad.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Debes completar todos los campos");
-        } else if (txtPrecioCosto.getText() == null) {
+        } else if (txtPrecioCosto.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Debes completar todos los campos");
         } else {
             String codigo = txtCodigo.getText();

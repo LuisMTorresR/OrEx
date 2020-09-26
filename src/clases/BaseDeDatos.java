@@ -28,7 +28,7 @@ public class BaseDeDatos {
         if (!ficheroXls.isFile()) {
             XSSFWorkbook libro = new XSSFWorkbook();
             XSSFSheet hoja1 = libro.createSheet(nameHoja1);
-            String[] cabecero = new String[]{"Nombre", "Apellido", "Email", "Username", "Password", "Telefono", "Direccion"};
+            String[] cabecero = new String[]{"Nombre", "Apellido", "Email", "Username", "Password", "Categoria", "Telefono", "Direccion"};
             XSSFRow fila = hoja1.createRow(0);
             for (int i = 0; i < cabecero.length; i++) {
                 if (fila.getRowNum() == 0) {

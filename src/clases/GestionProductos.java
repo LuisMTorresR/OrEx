@@ -55,14 +55,13 @@ public class GestionProductos {
         }
     }
 
-    public void eliminarProducto() {
+    public void eliminarProducto(int id) {
 
         try {
             Workbook libro = WorkbookFactory.create(new FileInputStream(nameFile));
             String nombreHoja = libro.getSheetName(1);
             Sheet hoja = libro.getSheet(nombreHoja);
 
-            id = ListadoDeProductos.getId();
             
             new BaseDeDatos().removeRow(hoja, id);
 

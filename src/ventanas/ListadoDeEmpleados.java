@@ -28,12 +28,8 @@ public class ListadoDeEmpleados extends javax.swing.JFrame {
                 .getScaledInstance(labelWallpaper.getWidth(), labelWallpaper.getHeight(), Image.SCALE_DEFAULT));
         labelWallpaper.setIcon(wallpaper);
 
-        //Lenado de la tabla de Empleados
+        llenadoDeTabla();
         
-        GestionEmpleados llenarTabla = new GestionEmpleados();
-        llenarTabla.llenadoTablaEmpleados();
-        DefaultTableModel modelo = llenarTabla.tableModel;
-        this.tabla.setModel(modelo);
         
     }
     
@@ -41,6 +37,15 @@ public class ListadoDeEmpleados extends javax.swing.JFrame {
     public Image getIconImage() {
         Disennio icono = new Disennio();
         return icono.getIconImage();
+    }
+    
+    public void llenadoDeTabla(){
+        
+        GestionEmpleados llenarTabla = new GestionEmpleados();
+        llenarTabla.llenadoTablaEmpleados();
+        DefaultTableModel modelo = llenarTabla.tableModel;
+        this.tabla.setModel(modelo);
+        
     }
 
     /**
@@ -56,12 +61,11 @@ public class ListadoDeEmpleados extends javax.swing.JFrame {
         tabla = new javax.swing.JTable();
         botonInfo = new javax.swing.JButton();
         botonEliminar = new javax.swing.JButton();
-        botonModificar = new javax.swing.JButton();
         botonActualizar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         labelWallpaper = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setIconImage(getIconImage());
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -90,51 +94,55 @@ public class ListadoDeEmpleados extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tabla);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 669, 275));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 740, 275));
 
+        botonInfo.setBackground(new java.awt.Color(51, 51, 51));
+        botonInfo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        botonInfo.setForeground(new java.awt.Color(255, 255, 255));
         botonInfo.setText("Informacion");
         botonInfo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonInfoActionPerformed(evt);
             }
         });
-        getContentPane().add(botonInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 397, -1, -1));
+        getContentPane().add(botonInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 410, 110, 40));
 
+        botonEliminar.setBackground(new java.awt.Color(51, 51, 51));
+        botonEliminar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        botonEliminar.setForeground(new java.awt.Color(255, 255, 255));
         botonEliminar.setText("Eliminar");
-        getContentPane().add(botonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 400, -1, -1));
-
-        botonModificar.setText("Modificar");
-        botonModificar.addActionListener(new java.awt.event.ActionListener() {
+        botonEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonModificarActionPerformed(evt);
+                botonEliminarActionPerformed(evt);
             }
         });
-        getContentPane().add(botonModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 400, -1, -1));
+        getContentPane().add(botonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 410, 110, 40));
 
+        botonActualizar.setBackground(new java.awt.Color(51, 51, 51));
+        botonActualizar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        botonActualizar.setForeground(new java.awt.Color(255, 255, 255));
         botonActualizar.setText("Actualizar");
         botonActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonActualizarActionPerformed(evt);
             }
         });
-        getContentPane().add(botonActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 400, -1, -1));
+        getContentPane().add(botonActualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 410, 100, 40));
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel1.setText("Gestion de Empleados");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 30, -1, -1));
-        getContentPane().add(labelWallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -6, 700, 510));
+        jLabel1.setFont(new java.awt.Font("Mongolian Baiti", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Listado de Empleados");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, -1, -1));
+        getContentPane().add(labelWallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -6, 800, 560));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonActualizarActionPerformed
 
-    }//GEN-LAST:event_botonActualizarActionPerformed
-
-    private void botonModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonModificarActionPerformed
+        llenadoDeTabla();
         
-
-    }//GEN-LAST:event_botonModificarActionPerformed
+    }//GEN-LAST:event_botonActualizarActionPerformed
 
     private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
     
@@ -143,7 +151,7 @@ public class ListadoDeEmpleados extends javax.swing.JFrame {
         }
 
         Buscar selector = new Buscar();
-        selector.buscarEmpleado();
+        selector.buscarEmpleado(id);
         
         
     }//GEN-LAST:event_tablaMouseClicked
@@ -153,10 +161,19 @@ public class ListadoDeEmpleados extends javax.swing.JFrame {
         new InformacionDelEmpleado().setVisible(true);
         
     }//GEN-LAST:event_botonInfoActionPerformed
-    
-    public int getId() {
+
+    private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
+        int num = JOptionPane.showConfirmDialog(null, "Realmente desea eliminar el registro?", "Eliminar Registro", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+         if (num == 0){
+             new GestionEmpleados().eliminarEmpleado(id);
+             llenadoDeTabla();
+         }
+    }//GEN-LAST:event_botonEliminarActionPerformed
+
+    public static int getId() {
         return id;
     }
+    
 
     
     
@@ -203,7 +220,6 @@ public class ListadoDeEmpleados extends javax.swing.JFrame {
     private javax.swing.JButton botonActualizar;
     private javax.swing.JButton botonEliminar;
     private javax.swing.JButton botonInfo;
-    private javax.swing.JButton botonModificar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelWallpaper;

@@ -46,6 +46,28 @@ public class GestionEmpleados {
         } catch (Exception e) {
         }
     }
+    
+    public void eliminarEmpleado(int id){
+         try {
+            Workbook libro = WorkbookFactory.create(new FileInputStream(nameFile));
+            String nombreHoja = libro.getSheetName(0);
+            Sheet hoja = libro.getSheet(nombreHoja);
+
+            
+            new BaseDeDatos().removeRow(hoja, id);
+
+            try (OutputStream fileOut = new FileOutputStream(nameFile)) {
+                libro.write(fileOut);
+                libro.close();
+                JOptionPane.showMessageDialog(null, "Registro del empleado eliminado");
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "Error " + ex);
+            }
+
+        } catch (IOException ex) {
+            System.err.println("Error en la base de datos" + ex.getMessage());
+        }
+    }
 
     public void llenadoTablaEmpleados() {
         
@@ -54,6 +76,7 @@ public class GestionEmpleados {
         tableModel.addColumn("EMAIL");
         tableModel.addColumn("USERNAME");
         tableModel.addColumn("PASSWORD");
+        tableModel.addColumn("CATEGORIA");
         tableModel.addColumn("TELEFONO");
         tableModel.addColumn("DIRECCION");
 

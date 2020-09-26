@@ -2,12 +2,10 @@ package clases;
 
 import java.io.*;
 import java.util.Iterator;
-import javax.swing.JOptionPane;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.ss.usermodel.*;
 import ventanas.Caja;
 import ventanas.ListadoDeEmpleados;
-import ventanas.ListadoDeProductos;
 
 /**
  *
@@ -19,7 +17,7 @@ public class Buscar {
     private int id;
     private static String[] datos;
 
-    public void buscarEmpleado() {
+    public void buscarEmpleado( int id) {
 
         try {
             Workbook libro = WorkbookFactory.create(new FileInputStream(nameFile));
@@ -28,7 +26,6 @@ public class Buscar {
 
             //recorre celda por celda
             ListadoDeEmpleados num = new ListadoDeEmpleados();
-            id = num.getId();
             int index = 0;
             Row fila = hoja.getRow(id);
 
@@ -50,7 +47,7 @@ public class Buscar {
     }
 
     //buscar producto por ID
-    public void buscarProducto() {
+    public void buscarProducto(int id) {
 
         try {
             Workbook libro = WorkbookFactory.create(new FileInputStream(nameFile));
@@ -58,7 +55,8 @@ public class Buscar {
             Sheet hoja = libro.getSheet(nombreHoja);
 
             //recorre celda por celda
-            id = ListadoDeProductos.getId();
+            
+            //id = ListadoDeProductos.getId();
             int index = 0;
             Row fila = hoja.getRow(id);
 
@@ -118,11 +116,11 @@ public class Buscar {
 
     }
     
+
     
 
     public static String[] getDatos() {
         return datos;
     }
-
 
 }

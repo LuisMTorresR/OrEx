@@ -3,7 +3,6 @@ package ventanas;
 import clases.Buscar;
 import clases.Disennio;
 import clases.GestionProductos;
-import java.awt.Component;
 import java.awt.Image;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
@@ -41,7 +40,7 @@ public class ListadoDeProductos extends javax.swing.JFrame {
         GestionProductos llenarTabla = new GestionProductos();
         llenarTabla.llenadoTablaProductos();
         DefaultTableModel modelo = llenarTabla.tableModel;
-        this.tabla.setModel(modelo);
+        tabla.setModel(modelo);
     }
 
     /**
@@ -59,16 +58,28 @@ public class ListadoDeProductos extends javax.swing.JFrame {
         botonInfo = new javax.swing.JButton();
         botonModif = new javax.swing.JButton();
         botonEliminar = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         labelWallpaper = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setIconImage(getIconImage());
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Cambria", 1, 18)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Mongolian Baiti", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("Gestion de Productos");
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 10, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 10, -1, -1));
 
+        tabla = new javax.swing.JTable(){
+            public boolean isCellEditable(int row,int col){
+                for(int i = 0; i<tabla.getRowCount(); i++){
+                    if(row==i){
+                        return false;
+                    }
+                }
+                return true;
+            }
+        };
         tabla.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -89,29 +100,49 @@ public class ListadoDeProductos extends javax.swing.JFrame {
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 750, 311));
 
+        botonInfo.setBackground(new java.awt.Color(51, 51, 51));
+        botonInfo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        botonInfo.setForeground(new java.awt.Color(255, 255, 255));
         botonInfo.setText("Informacion");
         botonInfo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonInfoActionPerformed(evt);
             }
         });
-        getContentPane().add(botonInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 440, 100, 40));
+        getContentPane().add(botonInfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 440, 110, 40));
 
+        botonModif.setBackground(new java.awt.Color(51, 51, 51));
+        botonModif.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        botonModif.setForeground(new java.awt.Color(255, 255, 255));
         botonModif.setText("Modificar");
         botonModif.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonModifActionPerformed(evt);
             }
         });
-        getContentPane().add(botonModif, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 440, 90, 40));
+        getContentPane().add(botonModif, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 440, 110, 40));
 
+        botonEliminar.setBackground(new java.awt.Color(51, 51, 51));
+        botonEliminar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        botonEliminar.setForeground(new java.awt.Color(255, 255, 255));
         botonEliminar.setText("Eliminar");
         botonEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonEliminarActionPerformed(evt);
             }
         });
-        getContentPane().add(botonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 440, 90, 40));
+        getContentPane().add(botonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 440, 110, 40));
+
+        jButton1.setBackground(new java.awt.Color(51, 51, 51));
+        jButton1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("Actualizar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 440, 110, 40));
         getContentPane().add(labelWallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(-4, -3, 810, 560));
 
         pack();
@@ -124,7 +155,7 @@ public class ListadoDeProductos extends javax.swing.JFrame {
         }
 
         Buscar selector = new Buscar();
-        selector.buscarProducto();
+        selector.buscarProducto(id);
 
     }//GEN-LAST:event_tablaMouseClicked
 
@@ -144,7 +175,7 @@ public class ListadoDeProductos extends javax.swing.JFrame {
 
         int num = JOptionPane.showConfirmDialog(null, "Realmente desea eliminar el producto?", "Eliminar Producto", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
         if (num == 0) {
-            new GestionProductos().eliminarProducto();
+            new GestionProductos().eliminarProducto(id);
             llenadoDeTabla();
         }else{
             llenadoDeTabla();
@@ -152,6 +183,12 @@ public class ListadoDeProductos extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_botonEliminarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        
+        llenadoDeTabla();
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     public static int getId() {
         return id;
@@ -184,6 +221,12 @@ public class ListadoDeProductos extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -197,6 +240,7 @@ public class ListadoDeProductos extends javax.swing.JFrame {
     private javax.swing.JButton botonEliminar;
     private javax.swing.JButton botonInfo;
     private javax.swing.JButton botonModif;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelWallpaper;

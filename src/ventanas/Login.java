@@ -1,6 +1,8 @@
 package ventanas;
 
+import clases.Buscar;
 import clases.Disennio;
+import clases.LoginClass;
 import java.awt.*;
 import javax.swing.*;
 
@@ -10,6 +12,8 @@ import javax.swing.*;
  */
 public class Login extends javax.swing.JFrame {
 
+    private static String username;
+    private static String password;
 
     public Login() {
         initComponents();
@@ -57,22 +61,30 @@ public class Login extends javax.swing.JFrame {
         getContentPane().add(labelLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 270, 260));
 
         jLabel1.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("USUARIO");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 280, -1, -1));
 
         txtUserName.setBackground(new java.awt.Color(208, 228, 208));
+        txtUserName.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtUserName.setForeground(new java.awt.Color(51, 51, 51));
         txtUserName.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         getContentPane().add(txtUserName, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 300, 190, -1));
 
         jLabel2.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("CONTRASEÑA");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 340, -1, -1));
 
         txtPasword.setBackground(new java.awt.Color(208, 228, 208));
+        txtPasword.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        txtPasword.setForeground(new java.awt.Color(51, 51, 51));
         txtPasword.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         getContentPane().add(txtPasword, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, 190, -1));
 
+        botonAcceder.setBackground(new java.awt.Color(51, 51, 51));
         botonAcceder.setFont(new java.awt.Font("Cambria", 1, 12)); // NOI18N
+        botonAcceder.setForeground(new java.awt.Color(255, 255, 255));
         botonAcceder.setText("ACCEDER");
         botonAcceder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -91,10 +103,22 @@ public class Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
         }
         else{
-            //accesar mediante comprobacion de datos
+            username = txtUserName.getText();
+            password = txtPasword.getText();
+            new LoginClass().login();
         }
     }//GEN-LAST:event_botonAccederActionPerformed
 
+    public static String getUsername() {
+        return username;
+    }
+
+    public static String getPassword() {
+        return password;
+    }
+
+    
+    
     /**
      * @param args the command line arguments
      */
