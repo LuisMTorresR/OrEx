@@ -16,6 +16,7 @@ public class RegistrarProducto extends javax.swing.JFrame {
 
     private static String[][] datos;
     private int dolar = PrecioDolar.getDolar();
+
     public RegistrarProducto() {
         initComponents();
         setLocationRelativeTo(null);
@@ -55,6 +56,8 @@ public class RegistrarProducto extends javax.swing.JFrame {
         txtMarca = new javax.swing.JTextField();
         txtPrecioCosto = new javax.swing.JTextField();
         txtCantidad = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        txtPorcentaje = new javax.swing.JTextField();
         labelWallpaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -92,7 +95,7 @@ public class RegistrarProducto extends javax.swing.JFrame {
                 jButtonRegistrarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 220, 90, 90));
+        getContentPane().add(jButtonRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 240, 90, 90));
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -103,19 +106,25 @@ public class RegistrarProducto extends javax.swing.JFrame {
         getContentPane().add(txtMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 270, 190, -1));
         getContentPane().add(txtPrecioCosto, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 340, 190, -1));
         getContentPane().add(txtCantidad, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 410, 190, -1));
-        getContentPane().add(labelWallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 530, 540));
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Porcentaje");
+        getContentPane().add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 460, -1, -1));
+        getContentPane().add(txtPorcentaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 480, 190, -1));
+        getContentPane().add(labelWallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 530, 560));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonRegistrarActionPerformed
 
-       registrarProducto();
-       new GestionProductos().llenadoTablaProductos();
+        registrarProducto();
+        new GestionProductos().llenadoTablaProductos();
 
     }//GEN-LAST:event_jButtonRegistrarActionPerformed
 
-    public void registrarProducto(){
+    public void registrarProducto() {
         if (txtCodigo.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Debes completar todos los campos");
         } else if (txtNombre.getText().equals("")) {
@@ -126,18 +135,25 @@ public class RegistrarProducto extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Debes completar todos los campos");
         } else if (txtPrecioCosto.getText().equals("")) {
             JOptionPane.showMessageDialog(null, "Debes completar todos los campos");
+        } else if (txtPorcentaje.getText().equals("")) {
+            JOptionPane.showMessageDialog(null, "Debes completar todos los campos");
         } else {
+            
+            
             String codigo = txtCodigo.getText();
             String nombre = txtNombre.getText();
             String marca = txtMarca.getText();
             String precioCosto = txtPrecioCosto.getText();
-            String precioVentaDol = String.valueOf(Double.parseDouble(precioCosto) + (Double.parseDouble(precioCosto) * 0.30));
             String cantidad = txtCantidad.getText();
-           
-            datos = new String[][]{
-                {codigo, nombre, marca, precioCosto, precioVentaDol, cantidad}};
+            String porcentaje = txtPorcentaje.getText();
+            float precioVentaDll = ((Float.parseFloat(precioCosto) * Float.parseFloat(porcentaje) / 100) + Float.parseFloat(precioCosto));
+            String precioVentaDol = String.valueOf(precioVentaDll);
             
-                    
+            
+
+            datos = new String[][]{
+                {codigo, nombre, marca, precioCosto, porcentaje, precioVentaDol, cantidad}};
+
             try {
                 new GestionProductos().registrarProducto();
             } catch (IOException ex) {
@@ -149,14 +165,13 @@ public class RegistrarProducto extends javax.swing.JFrame {
             txtMarca.setText("");
             txtCantidad.setText("");
             txtPrecioCosto.setText("");
+            txtPorcentaje.setText("");
         }
     }
-    
-    
+
     public static String[][] getDatos() {
         return datos;
     }
-
 
     /**
      * @param args the command line arguments
@@ -201,11 +216,13 @@ public class RegistrarProducto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel labelWallpaper;
     private javax.swing.JTextField txtCantidad;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtMarca;
     private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtPorcentaje;
     private javax.swing.JTextField txtPrecioCosto;
     // End of variables declaration//GEN-END:variables
 }

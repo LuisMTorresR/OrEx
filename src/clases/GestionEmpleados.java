@@ -1,11 +1,10 @@
 package clases;
 
 import java.io.*;
-import java.util.Iterator;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import org.apache.poi.ss.usermodel.*;
-import ventanas.RegistrarDeEmpleado;
+import ventanas.RegistrarEmpleado;
 
 /**
  *
@@ -15,7 +14,7 @@ public class GestionEmpleados {
 
     private String nameFile = BaseDeDatos.getNOMBRE_ARCHIVO();
     public DefaultTableModel tableModel = new DefaultTableModel();
-    
+   
 
     public GestionEmpleados() {
 
@@ -26,7 +25,7 @@ public class GestionEmpleados {
         Workbook libro = WorkbookFactory.create(new FileInputStream(nameFile));
         String nombreHoja = libro.getSheetName(0);
         Sheet hoja = libro.getSheet(nombreHoja);
-        String[][] datos = RegistrarDeEmpleado.getDatos();
+        String[][] datos = RegistrarEmpleado.getDatos();
 
         int ultimaFila = hoja.getLastRowNum() + 1;
 
@@ -43,7 +42,9 @@ public class GestionEmpleados {
         try (OutputStream fileOut = new FileOutputStream(nameFile)) {
             libro.write(fileOut);
             libro.close();
+            
         } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "No existe una base de datos");
         }
     }
     
@@ -87,41 +88,25 @@ public class GestionEmpleados {
             Sheet hoja = libro.getSheet(nombreHoja);
             
 
-            int maxCol = 0;
-            for (int a = 0; a <= hoja.getLastRowNum(); a++) {
-                if (hoja.getRow(a) != null) {
-                    if (hoja.getRow(a).getLastCellNum() > maxCol) {
-                        maxCol = hoja.getRow(a).getLastCellNum();
-                    }
-                } 
-            }
-            if (maxCol > 0) {
-                
-                //recorre fila por fila
-                Iterator<Row> rowIterator = hoja.iterator();
-                while (rowIterator.hasNext()) {
-
-                    int index = 0;
-                    Row fila = rowIterator.next();
-
-                    Object[] obj = new Object[fila.getLastCellNum()];
-                    Iterator<Cell> cellIterator = fila.cellIterator();
-
-                    while (cellIterator.hasNext()) {
-                        Cell cell = cellIterator.next();
-                        //contenido para celdas vacias
-                        while (index < cell.getColumnIndex()) {
-                            obj[index] = "";
-                            index += 1;
+           int primeraFila = 1; // 0 based 
+            Object[] obj = null;
+            for (int i = primeraFila; i <= hoja.getLastRowNum(); i++) {
+                Row fila = hoja.getRow(i);
+                if (fila == null) {
+                    JOptionPane.showMessageDialog(null, "No hay datos");
+                } else {
+                    obj = new Object[fila.getLastCellNum()];
+                    for (int cn = fila.getFirstCellNum(); cn < fila.getLastCellNum(); cn++) {
+                        Cell celda = fila.getCell(cn, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+                        if (celda == null) {
+                            JOptionPane.showMessageDialog(null, "No hay datos"); 
+                        } else {
+                            obj[cn] = celda.getStringCellValue();
                         }
-                        obj[index] = cell.getStringCellValue();
-                        index += 1;
                     }
-                    tableModel.addRow(obj);              
+                    tableModel.addRow(obj);
+                    
                 }
-
-            } else {
-                JOptionPane.showMessageDialog(null, "No existe una base de datos");
             }
         } catch (IOException ex) {
             System.err.println("Error en la base de datos" + ex.getMessage());

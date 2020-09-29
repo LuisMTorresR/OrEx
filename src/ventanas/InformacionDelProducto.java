@@ -1,13 +1,10 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package ventanas;
 
 import clases.Buscar;
 import clases.Disennio;
 import java.awt.Image;
+import java.util.Arrays;
 import javax.swing.ImageIcon;
 
 /**
@@ -17,6 +14,7 @@ import javax.swing.ImageIcon;
 public class InformacionDelProducto extends javax.swing.JFrame {
     
     private double dolar = PrecioDolar.getDolar();
+    private int id;
     /**
      * Creates new form InformacionDelProducto
      */
@@ -49,7 +47,8 @@ public class InformacionDelProducto extends javax.swing.JFrame {
         txtCodigo.setText(datos[0]);
         txtNombre.setText(datos[1]);
         txtMarca.setText(datos[2]);
-        txtPrecioenDoll.setText(datos[4]);
+        txtPrecioenDoll.setText(datos[5]);
+        
     }
     
     public void calcularBs(){

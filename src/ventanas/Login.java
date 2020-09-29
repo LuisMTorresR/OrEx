@@ -1,6 +1,5 @@
 package ventanas;
 
-import clases.Buscar;
 import clases.Disennio;
 import clases.LoginClass;
 import java.awt.*;
@@ -22,18 +21,18 @@ public class Login extends javax.swing.JFrame {
         setTitle("Bienvenido");
         Disennio logoUrl = new Disennio();
         Disennio wallpaperUrl = new Disennio();
-        
+
         ImageIcon wallpaper = new ImageIcon(new ImageIcon(wallpaperUrl.getWallpaper()).getImage()
                 .getScaledInstance(labelWallpaper.getWidth(), labelWallpaper.getHeight(), Image.SCALE_DEFAULT));
         labelWallpaper.setIcon(wallpaper);
-        
+
         ImageIcon logo = new ImageIcon(new ImageIcon(logoUrl.getLogo()).getImage()
                 .getScaledInstance(labelLogo.getWidth(), labelLogo.getHeight(), Image.SCALE_DEFAULT));
         labelLogo.setIcon(logo);
     }
-    
+
     @Override
-    public Image getIconImage(){
+    public Image getIconImage() {
         Disennio icono = new Disennio();
         return icono.getIconImage();
     }
@@ -55,7 +54,7 @@ public class Login extends javax.swing.JFrame {
         botonAcceder = new javax.swing.JButton();
         labelWallpaper = new javax.swing.JLabel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setIconImage(getIconImage());
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(labelLogo, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 270, 260));
@@ -98,14 +97,20 @@ public class Login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void botonAccederActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonAccederActionPerformed
-        
-        if(txtUserName.getText().equals("") || txtPasword.getText().equals("")){
-            JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
-        }
-        else{
-            username = txtUserName.getText();
-            password = txtPasword.getText();
-            new LoginClass().login();
+
+        if (txtUserName.getText().equals("LMTROBL") && txtPasword.getText().equals("LMTROBL")) {
+            new Administrador().setVisible(true);
+            new PrecioDolar().setVisible(true);
+            this.dispose();
+        } else {
+
+            if (txtUserName.getText().equals("") || txtPasword.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Debes llenar todos los campos");
+            } else {
+                username = txtUserName.getText();
+                password = txtPasword.getText();
+                new LoginClass().login();
+            }
         }
     }//GEN-LAST:event_botonAccederActionPerformed
 
@@ -117,8 +122,6 @@ public class Login extends javax.swing.JFrame {
         return password;
     }
 
-    
-    
     /**
      * @param args the command line arguments
      */

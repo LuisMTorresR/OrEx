@@ -9,7 +9,7 @@ import javax.swing.*;
  */
 public class Disennio {
     
-    private String logo = "src/images/Logo.png";
+    private String logo = "src/images/OrexLogo.png";
     private String wallpaper = "src/images/39908-azul-solido.jpg";
     
         public Disennio() {
@@ -26,7 +26,7 @@ public class Disennio {
 
 
     public Image getIconImage() {
-        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/Logo.png"));
+        Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("images/OrexLogo.png"));
         return retValue;
     }
 

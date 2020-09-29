@@ -3,7 +3,6 @@ package ventanas;
 
 import clases.Buscar;
 import clases.Disennio;
-import clases.GestionProductos;
 import clases.Modificar;
 import java.awt.Color;
 import java.awt.Image;
@@ -40,8 +39,9 @@ public class ModificarProducto extends javax.swing.JFrame {
         txtNombre.setText(datos[1]);
         txtMarca.setText(datos[2]);
         txtPrecioCosto.setText(datos[3]);
-        txtPrecioDoll.setText(datos[4]);
-        txtCantidad.setText(datos[5]);
+        txtPorcentaje.setText(datos[4]);
+        txtPrecioDoll.setText(datos[5]);
+        txtCantidad.setText(datos[6]);
     }
     
     @Override
@@ -77,6 +77,8 @@ public class ModificarProducto extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         txtPrecioBs = new javax.swing.JTextField();
         txtPrecioDoll = new javax.swing.JTextField();
+        txtPorcentaje = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
         labelWallpaper = new javax.swing.JLabel();
 
         jLabel8.setText("jLabel8");
@@ -143,7 +145,7 @@ public class ModificarProducto extends javax.swing.JFrame {
                 jButtonGuardarActionPerformed(evt);
             }
         });
-        getContentPane().add(jButtonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 410, 90, 40));
+        getContentPane().add(jButtonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 480, 90, 40));
 
         botonEditar.setBackground(new java.awt.Color(51, 51, 51));
         botonEditar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -154,7 +156,7 @@ public class ModificarProducto extends javax.swing.JFrame {
                 botonEditarActionPerformed(evt);
             }
         });
-        getContentPane().add(botonEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 410, 90, 40));
+        getContentPane().add(botonEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 480, 90, 40));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
@@ -171,6 +173,14 @@ public class ModificarProducto extends javax.swing.JFrame {
 
         txtPrecioDoll.setEditable(false);
         getContentPane().add(txtPrecioDoll, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 310, 160, -1));
+
+        txtPorcentaje.setEditable(false);
+        getContentPane().add(txtPorcentaje, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 420, 160, -1));
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("Porcentaje");
+        getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 400, -1, -1));
         getContentPane().add(labelWallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 740, 550));
 
         pack();
@@ -178,14 +188,15 @@ public class ModificarProducto extends javax.swing.JFrame {
 
     private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
         
-          modificar = new String[6];
+          modificar = new String[7];
         
         modificar[0]= txtCodigo.getText();
         modificar[1]= txtNombre.getText();
         modificar[2]= txtMarca.getText();
         modificar[3]= txtPrecioCosto.getText();
-        modificar[4]= txtPrecioDoll.getText();
-        modificar[5]= txtCantidad.getText();
+        modificar[4] = txtPorcentaje.getText();
+        modificar[5]= txtPrecioDoll.getText();
+        modificar[6]= txtCantidad.getText();
         
         txtCodigo.setEditable(false);
         txtCodigo.setBackground(Color.white);
@@ -197,6 +208,8 @@ public class ModificarProducto extends javax.swing.JFrame {
         txtPrecioCosto.setBackground(Color.white);
         txtCantidad.setEditable(false);
         txtCantidad.setBackground(Color.white);
+        txtPorcentaje.setEditable(false);
+        txtPorcentaje.setBackground(Color.white);
 
         
         try {
@@ -219,6 +232,8 @@ public class ModificarProducto extends javax.swing.JFrame {
         txtPrecioCosto.setBackground(new Color(63,255,51));
         txtCantidad.setEditable(true);
         txtCantidad.setBackground(new Color(63,255,51));
+        txtPorcentaje.setEditable(true);
+        txtPorcentaje.setBackground(new Color(63,255,51));
         
     }//GEN-LAST:event_botonEditarActionPerformed
 
@@ -279,6 +294,7 @@ public class ModificarProducto extends javax.swing.JFrame {
     private javax.swing.JButton botonEditar;
     private javax.swing.JButton jButtonGuardar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -292,6 +308,7 @@ public class ModificarProducto extends javax.swing.JFrame {
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtMarca;
     private javax.swing.JTextField txtNombre;
+    private javax.swing.JTextField txtPorcentaje;
     private javax.swing.JTextField txtPrecioBs;
     private javax.swing.JTextField txtPrecioCosto;
     private javax.swing.JTextField txtPrecioDoll;

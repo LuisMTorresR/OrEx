@@ -6,7 +6,6 @@ import clases.Modificar;
 import java.awt.Color;
 import java.awt.Image;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;

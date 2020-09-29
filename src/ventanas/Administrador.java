@@ -29,12 +29,23 @@ public class Administrador extends javax.swing.JFrame {
                 .getScaledInstance(labelWallpaper.getWidth(), labelWallpaper.getHeight(), Image.SCALE_DEFAULT));
         labelWallpaper.setIcon(wallpaper);
         
+        new BaseDeDatos().refreshVentasDiarias();
+        
     }
     
     @Override
     public Image getIconImage(){
         Disennio icono = new Disennio();
         return icono.getIconImage();
+    }
+    
+    public static boolean estadoVentana(){
+        try {
+            new ListadoDeEmpleados().setVisible(true);
+        } catch (IOException ex) {
+            Logger.getLogger(Administrador.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return true;
     }
 
     @SuppressWarnings("unchecked")
@@ -149,6 +160,11 @@ public class Administrador extends javax.swing.JFrame {
         botonLibros.setBackground(new java.awt.Color(102, 102, 102));
         botonLibros.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/configuraciones.png"))); // NOI18N
         botonLibros.setBorder(javax.swing.BorderFactory.createTitledBorder(""));
+        botonLibros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonLibrosActionPerformed(evt);
+            }
+        });
         getContentPane().add(botonLibros, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 310, 80, 70));
 
         jLabel1.setFont(new java.awt.Font("Mongolian Baiti", 1, 36)); // NOI18N
@@ -207,17 +223,26 @@ public class Administrador extends javax.swing.JFrame {
 
     private void botonGestionEmplActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGestionEmplActionPerformed
        
-        try {
-            new ListadoDeEmpleados().setVisible(true);
-        } catch (IOException ex) {
-            Logger.getLogger(Administrador.class.getName()).log(Level.SEVERE, null, ex);
+        if(estadoVentana()==false){
+            try {
+                new ListadoDeEmpleados().setVisible(true);
+            } catch (IOException ex) {
+                Logger.getLogger(Administrador.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            try {
+                new ListadoDeEmpleados().dispose();
+            } catch (IOException ex) {
+                Logger.getLogger(Administrador.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+       
         
     }//GEN-LAST:event_botonGestionEmplActionPerformed
 
     private void botonRegistroEmplActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonRegistroEmplActionPerformed
         
-        new RegistrarDeEmpleado().setVisible(true);
+        new RegistrarEmpleado().setVisible(true);
         
     }//GEN-LAST:event_botonRegistroEmplActionPerformed
 
@@ -239,7 +264,7 @@ public class Administrador extends javax.swing.JFrame {
 
     private void botonGestionProductoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGestionProductoActionPerformed
        
-        new ListadoDeProductos().setVisible(true);
+        new GestionDeProductos().setVisible(true);
         
     }//GEN-LAST:event_botonGestionProductoActionPerformed
 
@@ -260,6 +285,12 @@ public class Administrador extends javax.swing.JFrame {
         new Caja().setVisible(true);
         
     }//GEN-LAST:event_botonCajaActionPerformed
+
+    private void botonLibrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonLibrosActionPerformed
+      
+
+        
+    }//GEN-LAST:event_botonLibrosActionPerformed
 
     /**
      * @param args the command line arguments

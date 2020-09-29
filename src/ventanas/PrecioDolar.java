@@ -3,6 +3,7 @@ package ventanas;
 import clases.Disennio;
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -11,7 +12,7 @@ import javax.swing.ImageIcon;
 public class PrecioDolar extends javax.swing.JFrame {
 
     private static int dolar;
-    
+
     /**
      * Creates new form PrecioDolar
      */
@@ -26,13 +27,21 @@ public class PrecioDolar extends javax.swing.JFrame {
                 .getScaledInstance(labelWallpaper.getWidth(), labelWallpaper.getHeight(), Image.SCALE_DEFAULT));
         labelWallpaper.setIcon(wallpaper);
     }
-    
+
     @Override
-    public Image getIconImage(){
+    public Image getIconImage() {
         Disennio icono = new Disennio();
         return icono.getIconImage();
     }
 
+    private static boolean isNumeric(String cadena) {
+        try {
+            Integer.parseInt(cadena);
+            return true;
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -71,17 +80,20 @@ public class PrecioDolar extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        
-        dolar = Integer.parseInt(txtPrecioDolar.getText());
-        this.setVisible(false);
+
+        String num = txtPrecioDolar.getText();
+        if (isNumeric(num) && num.length() > 0) {
+            dolar = Integer.parseInt(txtPrecioDolar.getText());
+            this.setVisible(false);
+        } else {
+            JOptionPane.showMessageDialog(null, "Debe ingresar un monto");
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     public static int getDolar() {
         return dolar;
     }
 
-    
-    
     /**
      * @param args the command line arguments
      */

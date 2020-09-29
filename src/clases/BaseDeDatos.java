@@ -1,30 +1,30 @@
 package clases;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.LinkOption;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.*;
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 public class BaseDeDatos {
 
+    private static Date date = new Date();
     private static final String NOMBRE_ARCHIVO = "BaseDeDatos.xlsx";
 
     public void crearBaseDeDatos() throws IOException {
         String nameHoja1 = "Emepleados";
         String nameHoja2 = "Productos";
         String nameHoja3 = "VentasDiarias";
-        String nameHoja4 = "VentasSemanales";
-        String nameHoja5 = "VentasMensuales";
+        String nameHoja4 = "VentasMensuales";
         //Verificamos si el archivo existe
         //De no existir se crea
         File ficheroXls = new File(NOMBRE_ARCHIVO);
-
         if (!ficheroXls.isFile()) {
             XSSFWorkbook libro = new XSSFWorkbook();
             XSSFSheet hoja1 = libro.createSheet(nameHoja1);
@@ -37,7 +37,7 @@ public class BaseDeDatos {
                 }
             }
             XSSFSheet hoja2 = libro.createSheet(nameHoja2);
-            String[] cabecero2 = new String[]{"Codigo", "Nombre", "Marca", "Precio de Compra", "Precio de Venta $", "Cantidad"};
+            String[] cabecero2 = new String[]{"Codigo", "Nombre", "Marca", "Precio de Compra", "Porcentaje", "Precio de Venta $", "Cantidad"};
             XSSFRow fila2 = hoja2.createRow(0);
             for (int i = 0; i < cabecero2.length; i++) {
                 if (fila2.getRowNum() == 0) {
@@ -46,7 +46,7 @@ public class BaseDeDatos {
                 }
             }
             XSSFSheet hoja3 = libro.createSheet(nameHoja3);
-            String[] cabecero3 = new String[]{"Producto", "Cantidad", "Prec.Unit.", "Total", " ", "TotalVentas"};
+            String[] cabecero3 = new String[]{"Nombre", "Marca", "Cantidad", "PrecioUnt $", "Total $", "Ganancia $", "PrecioUnit Bs", "Total Bs", "Ganancia Bs", "Fecha", "MetDePago"};
             XSSFRow fila3 = hoja3.createRow(0);
             for (int i = 0; i < cabecero3.length; i++) {
                 if (fila3.getRowNum() == 0) {
@@ -55,7 +55,7 @@ public class BaseDeDatos {
                 }
             }
             XSSFSheet hoja4 = libro.createSheet(nameHoja4);
-            String[] cabecero4 = new String[]{"Lunes", "Martes", "Miercoles", "Jueves", "Viernes", "Sabado", "Domingo", " ", "Total"};
+            String[] cabecero4 = new String[]{"Nombre", "Marca", "Cantidad", "PrecioUnt $", "Total $", "Ganancia $", "PrecioUnit Bs", "Total Bs", "Ganancia Bs", "Fecha", "MetDePago"};
             XSSFRow fila4 = hoja4.createRow(0);
             for (int i = 0; i < cabecero4.length; i++) {
                 if (fila4.getRowNum() == 0) {
@@ -69,19 +69,19 @@ public class BaseDeDatos {
 //                Boolean hidden = (Boolean) Files.getAttribute(path, "dos:hidden", LinkOption.NOFOLLOW_LINKS);
 //                if (hidden != null && !hidden) {
 //                    Files.setAttribute(path, "dos:hidden", Boolean.TRUE, LinkOption.NOFOLLOW_LINKS);
-                    libro.write(fileOut);
-                    JOptionPane.showMessageDialog(null, "Se creo la base de datos con exito.");
+                libro.write(fileOut);
+                JOptionPane.showMessageDialog(null, "Se creo la base de datos con exito.");
 //                }
             } catch (Exception e) {
-                JOptionPane.showMessageDialog(null,"Error al crear la base de datos " + e);
+                JOptionPane.showMessageDialog(null, "Error al crear la base de datos " + e);
             }
 
         } else {
             JOptionPane.showMessageDialog(null, "Ya existe una base de datos!");
         }
     }
-    
-    public  void removeRow(Sheet sheet, int rowIndex) {
+
+    public void removeRow(Sheet sheet, int rowIndex) {
         int lastRowNum = sheet.getLastRowNum();
         if (rowIndex >= 0 && rowIndex < lastRowNum) {
             sheet.shiftRows(rowIndex + 1, lastRowNum, -1);
@@ -94,8 +94,46 @@ public class BaseDeDatos {
         }
     }
 
+    public void refreshVentasDiarias() {
+
+        SimpleDateFormat fecha = new SimpleDateFormat("dd/MM/yyyy");
+        String fechaDiaria = fecha.format(date);
+        try {
+
+            Workbook libro = WorkbookFactory.create(new FileInputStream(NOMBRE_ARCHIVO));
+            String nombreHoja = libro.getSheetName(2);
+            Sheet hoja = libro.getSheet(nombreHoja);
+
+            int ultimaFila = hoja.getLastRowNum();
+            Row fila = hoja.getRow(ultimaFila);
+            int ultimaCelda = fila.getLastCellNum() - 1;
+            Cell celdaFecha = fila.getCell(ultimaCelda);
+            String fechaAnterior = celdaFecha.getStringCellValue();
+
+            if (fechaDiaria.equals(fechaAnterior) == false) {
+
+                for (int i = 1; i <= ultimaFila; ultimaFila--) {
+                    removeRow(hoja, ultimaFila);
+                }
+            }
+            try (OutputStream fileOut = new FileOutputStream(NOMBRE_ARCHIVO)) {
+                libro.write(fileOut);
+                libro.close();
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(null, "No existe una base de datos" + ex);
+            }
+
+        } catch (Exception e) {
+        }
+
+    }
+
     public static String getNOMBRE_ARCHIVO() {
         return NOMBRE_ARCHIVO;
+    }
+
+    public static Date getDate() {
+        return date;
     }
 
 }

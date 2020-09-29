@@ -1,22 +1,12 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package clases;
 
 import java.awt.HeadlessException;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.Arrays;
+import java.io.*;
 import java.util.Iterator;
 import javax.swing.JOptionPane;
 import org.apache.poi.EncryptedDocumentException;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
+import org.apache.poi.ss.usermodel.*;
 import ventanas.Administrador;
 import ventanas.Login;
 import ventanas.PrecioDolar;
@@ -69,14 +59,13 @@ public class LoginClass {
             if (password.equals(password2)){
                 new Administrador().setVisible(true);
                 new PrecioDolar().setVisible(true);
-                new Login().setVisible(false);
+                new Login().dispose();
                 
             }else{
-                datos = null;
+                JOptionPane.showMessageDialog(null, "Usuario ó contraseña incorrecta");
                 
             }
             
-            System.out.println(Arrays.toString(datos));
         } catch (HeadlessException | IOException | EncryptedDocumentException e) {
         }
     }

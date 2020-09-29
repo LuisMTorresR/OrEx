@@ -21,7 +21,7 @@ public class ListadoDeEmpleados extends javax.swing.JFrame {
         initComponents();
         setLocationRelativeTo(null);
         setResizable(false);
-        setTitle("Gestion de Empleados");
+        setTitle("Listado de Empleados");
         Disennio wallpaperUrl = new Disennio();
         
         ImageIcon wallpaper = new ImageIcon(new ImageIcon(wallpaperUrl.getWallpaper()).getImage()
@@ -151,7 +151,7 @@ public class ListadoDeEmpleados extends javax.swing.JFrame {
         }
 
         Buscar selector = new Buscar();
-        selector.buscarEmpleado(id);
+        selector.buscarEmpleado(id + 1);
         
         
     }//GEN-LAST:event_tablaMouseClicked

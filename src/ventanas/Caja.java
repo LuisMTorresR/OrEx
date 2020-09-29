@@ -1,13 +1,14 @@
 package ventanas;
 
-import clases.ActualizacionDeStock;
-import clases.Buscar;
+import clases.BaseDeDatos;
+import clases.CajaClass;
 import clases.Disennio;
 import clases.Modificar;
 import clases.VentasClass;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
+import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -20,16 +21,14 @@ public class Caja extends javax.swing.JFrame {
 
     private float dolar = PrecioDolar.getDolar();
     private static String codigo;
-    private String[] datos;
-    private String nombre;
-    private String marca;
-    private String precioUnitarioDolares;
-    private String cantidad;
-    private static String cantidades;
-    private float preciofloatDolares;
-    private float precioDoubleBs;
+    private String cantidadEnStock;
+    private static String metodoDePago;
+    private static String cantidadAComprar;
     private static DefaultTableModel tableModel;
+    private static DefaultTableModel tableModel2;
     private int fila;
+    private Date date = BaseDeDatos.getDate();
+    private static String productoDevuelto;
 
     public Caja() {
         initComponents();
@@ -42,8 +41,7 @@ public class Caja extends javax.swing.JFrame {
                 .getScaledInstance(labelWallpaper.getWidth(), labelWallpaper.getHeight(), Image.SCALE_DEFAULT));
         labelWallpaper.setIcon(wallpaper);
 
-        llenadoTabla();
-
+        encabezadoTabla();
     }
 
     @Override
@@ -52,71 +50,54 @@ public class Caja extends javax.swing.JFrame {
         return icono.getIconImage();
     }
 
-    public void llenadoTabla() {
+    public void encabezadoTabla() {
+
+        //Encabezado de la tabla
         tableModel = new DefaultTableModel();
         tableModel.addColumn("Nombre");
         tableModel.addColumn("Marca");
         tableModel.addColumn("Cantidad");
-        tableModel.addColumn("PrecioUnit $.");
-        tableModel.addColumn("Total $.");
-        tableModel.addColumn("PrecioUnit Bs.");
-        tableModel.addColumn("Total Bs.");
+        tableModel.addColumn("PrecioUnit $");
+        tableModel.addColumn("Total $");
+        tableModel.addColumn("PrecioUnit Bs");
+        tableModel.addColumn("Total Bs");
+        tableModel.addColumn("Fecha");
 
-        tabla.setModel(tableModel);
-    }
-
-    public void recuperarDatos() {
-
-        codigo = txtCodigo.getText();
-        new Buscar().buscarCodigo();
-        datos = Buscar.getDatos();
-
-        nombre = datos[1];
-        marca = datos[2];
-        precioUnitarioDolares = datos[4];
-        cantidad = datos[5];
+        //Encabezado de la tabla de ventas
+        tableModel2 = new DefaultTableModel();
+        tableModel2.addColumn("Nombre");
+        tableModel2.addColumn("Marca");
+        tableModel2.addColumn("Cantidad");
+        tableModel2.addColumn("PrecioUnit $");
+        tableModel2.addColumn("Total $");
+        tableModel2.addColumn("Ganancia $");
+        tableModel2.addColumn("PrecioUnit Bs");
+        tableModel2.addColumn("Total Bs");
+        tableModel2.addColumn("Ganancia Bs");
+        tableModel2.addColumn("Fecha");
+        tableModel2.addColumn("MetDePago");
     }
 
     public void cargarProducto() {
 
-        cantidades = String.valueOf(txtCantidad.getText());
-        float cantidadesNum = Float.parseFloat(cantidades);
-        preciofloatDolares = Float.parseFloat(precioUnitarioDolares);
-        precioDoubleBs = preciofloatDolares * dolar;
-
-        if (cantidadesNum > 1) {
-            preciofloatDolares = preciofloatDolares * cantidadesNum;
-            precioDoubleBs = precioDoubleBs * cantidadesNum;
-        }
-
-        //Tabla de ventas
-        String[] articulos = new String[7];
-        articulos[0] = nombre;
-        articulos[1] = marca;
-        articulos[2] = cantidades;
-        articulos[3] = precioUnitarioDolares;
-        articulos[4] = String.valueOf(Float.parseFloat(precioUnitarioDolares) * cantidadesNum);
-        articulos[5] = String.valueOf((int) (Double.parseDouble(precioUnitarioDolares) * dolar));
-        articulos[6] = String.valueOf((int) (((Double.parseDouble(precioUnitarioDolares) * dolar)) * cantidadesNum));
-
-        tableModel.addRow(articulos);
+        new CajaClass().llenadoTablaCaja();
+        new CajaClass().llenadoHojaDeVentas();
+        String[] datosDelProductoCaja;
+        String[] datosDelArticuloVentas;
+        datosDelProductoCaja = CajaClass.getDatosDelProductoCaja();
+        datosDelArticuloVentas = CajaClass.getDatosDelArticuloVentas();
+        tableModel.addRow(datosDelProductoCaja);
+        tableModel2.addRow(datosDelArticuloVentas);
         tabla.setModel(tableModel);
-
-        txtCodigo.setText("");
-        txtCantidad.setText("");
-        verificarStock();
-
     }
 
     public void verificarStock() {
 
-        if (Integer.parseInt(cantidades) > Integer.parseInt(cantidad)) {
-            int fila = tableModel.getRowCount() - 1;
-            tableModel.removeRow(fila);
+        if (Integer.parseInt(cantidadAComprar) > Integer.parseInt(cantidadEnStock)) {
+            int id = tableModel.getRowCount() - 1;
+            tableModel.removeRow(id);
             JOptionPane.showMessageDialog(null, "No hay stock");
-
         }
-
     }
 
     public void totalCobrar() {
@@ -142,10 +123,22 @@ public class Caja extends javax.swing.JFrame {
 
     }
 
+    public void metodoDePago() {
+
+        if (jRadioButtonDevito.isSelected()) {
+            metodoDePago = "Devito";
+        } else if (jRadioButtonEfectivo.isSelected()) {
+            metodoDePago = "Efectivo";
+        } else if (jRadioButtonDevito.isSelected() == false && jRadioButtonEfectivo.isSelected() == false) {
+            JOptionPane.showMessageDialog(null, "Debe seleccionar un metodo de pago");
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jLabel2 = new javax.swing.JLabel();
         txtCodigo = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
@@ -155,9 +148,11 @@ public class Caja extends javax.swing.JFrame {
         botonEliminar = new javax.swing.JButton();
         labelTotalDoll = new javax.swing.JLabel();
         botonCobrar = new javax.swing.JButton();
-        botonDetalle = new javax.swing.JButton();
         botonagregar = new javax.swing.JButton();
         labelTotalBs = new javax.swing.JLabel();
+        jRadioButtonEfectivo = new javax.swing.JRadioButton();
+        jRadioButtonDevito = new javax.swing.JRadioButton();
+        jLabel1 = new javax.swing.JLabel();
         labelWallpaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -217,7 +212,7 @@ public class Caja extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(tabla);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 750, -1));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 750, 330));
 
         botonEliminar.setBackground(new java.awt.Color(51, 51, 51));
         botonEliminar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -229,7 +224,7 @@ public class Caja extends javax.swing.JFrame {
                 botonEliminarActionPerformed(evt);
             }
         });
-        getContentPane().add(botonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 570, 100, 40));
+        getContentPane().add(botonEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 470, 100, 40));
 
         labelTotalDoll.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         labelTotalDoll.setForeground(new java.awt.Color(255, 255, 255));
@@ -245,23 +240,13 @@ public class Caja extends javax.swing.JFrame {
                 botonCobrarActionPerformed(evt);
             }
         });
-        getContentPane().add(botonCobrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 570, 100, 40));
-
-        botonDetalle.setBackground(new java.awt.Color(51, 51, 51));
-        botonDetalle.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        botonDetalle.setForeground(new java.awt.Color(255, 255, 255));
-        botonDetalle.setText("Detalle");
-        botonDetalle.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                botonDetalleActionPerformed(evt);
-            }
-        });
-        getContentPane().add(botonDetalle, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 570, 100, 40));
+        getContentPane().add(botonCobrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 560, 100, 40));
 
         botonagregar.setBackground(new java.awt.Color(51, 51, 51));
         botonagregar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         botonagregar.setForeground(new java.awt.Color(255, 255, 255));
         botonagregar.setText("Agregar");
+        botonagregar.setEnabled(false);
         botonagregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 botonagregarActionPerformed(evt);
@@ -273,6 +258,23 @@ public class Caja extends javax.swing.JFrame {
         labelTotalBs.setForeground(new java.awt.Color(255, 255, 255));
         labelTotalBs.setText("Total Bs:");
         getContentPane().add(labelTotalBs, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 580, 360, 30));
+
+        buttonGroup1.add(jRadioButtonEfectivo);
+        jRadioButtonEfectivo.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jRadioButtonEfectivo.setForeground(new java.awt.Color(255, 255, 255));
+        jRadioButtonEfectivo.setText("Efectivo");
+        getContentPane().add(jRadioButtonEfectivo, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 520, -1, -1));
+
+        buttonGroup1.add(jRadioButtonDevito);
+        jRadioButtonDevito.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jRadioButtonDevito.setForeground(new java.awt.Color(255, 255, 255));
+        jRadioButtonDevito.setText("Debito");
+        getContentPane().add(jRadioButtonDevito, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 560, -1, -1));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Metodo de Pago:");
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 480, -1, -1));
         getContentPane().add(labelWallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 850, 680));
 
         pack();
@@ -286,6 +288,8 @@ public class Caja extends javax.swing.JFrame {
             cargarProducto();
             totalCobrar();
             new Modificar().actualizarCantidad();
+            txtCodigo.setText("");
+            txtCantidad.setText("");
 
         }
     }//GEN-LAST:event_botonagregarActionPerformed
@@ -293,79 +297,122 @@ public class Caja extends javax.swing.JFrame {
 
     private void txtCodigoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoKeyReleased
 
+        codigo = txtCodigo.getText();
+        metodoDePago();
         if (txtCodigo.getText().length() > 1) {
-            recuperarDatos();
+            new CajaClass().recuperarDatos();
+
         }
 
     }//GEN-LAST:event_txtCodigoKeyReleased
 
+    private static boolean isNumeric(String cadena) {
+        try {
+            Integer.parseInt(cadena);
+            return true;
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+    }
 
     private void txtCantidadKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCantidadKeyReleased
 
-        cantidades = txtCantidad.getText();
-        if (cantidades.length() > 0 && Integer.parseInt(cantidades) > Integer.parseInt(cantidad)) {
+        cantidadEnStock = CajaClass.getCantidadEnStock();
+        cantidadAComprar = txtCantidad.getText();
+
+        if (isNumeric(cantidadAComprar)) {
+
+            if (cantidadAComprar.length() > 0 && Integer.parseInt(cantidadAComprar) > Integer.parseInt(cantidadEnStock)) {
                 JOptionPane.showMessageDialog(null, "No hay Stock");
                 txtCantidad.setText("");
-            }
-            if (Integer.parseInt(cantidades) == Integer.parseInt(cantidad)) {
-                txtCantidad.setBackground(Color.red);
+                botonagregar.setEnabled(false);
+
             } else {
-                txtCantidad.setBackground(Color.white);
+                if (Integer.parseInt(cantidadAComprar) == Integer.parseInt(cantidadEnStock)) {
+                    txtCantidad.setBackground(Color.red);
+                } else {
+                    txtCantidad.setBackground(Color.white);
+                }
+                botonagregar.setEnabled(true);
+
+                if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+                    botonagregar.doClick();
+                }
             }
 
-        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            botonagregar.doClick();
+        } else {
+            JOptionPane.showMessageDialog(null, "Cantidad no valida");
+            botonagregar.setEnabled(false);
         }
-
     }//GEN-LAST:event_txtCantidadKeyReleased
 
 
     private void botonEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonEliminarActionPerformed
+        if (fila < 0) {
+            JOptionPane.showMessageDialog(null, "Ningun elemento seleccionado");
+        } else {
+            int num = JOptionPane.showConfirmDialog(null, "Realmente desea eliminar el producto?", "Eliminar Producto", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
 
-        int num = JOptionPane.showConfirmDialog(null, "Realmente desea eliminar el producto?", "Eliminar Producto", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE);
+            if (num == 0) {
+                tableModel.removeRow(fila);
+                totalCobrar();
+            }
+            if (tableModel.getRowCount() == 0) {
+                labelTotalDoll.setText("Total $:");
+                labelTotalBs.setText("Total Bs:");
+                new Modificar().devolverProducto();
+            }
 
-        if (num == 0) {
-            tableModel.removeRow(fila);
-            totalCobrar();
         }
-        if (tableModel.getRowCount() == 0) {
-            labelTotalDoll.setText("Total $:");
-            labelTotalBs.setText("Total Bs:");
-        }
+
     }//GEN-LAST:event_botonEliminarActionPerformed
 
 
     private void botonCobrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCobrarActionPerformed
 
         new VentasClass().ventasDiarias();
-        tableModel = null;
-        
+        int filas = tableModel.getRowCount();
+        for (int i = 0; i < filas; i++) {
+            tableModel.removeRow(0);
+        }
+        labelTotalDoll.setText("Total $:");
+        labelTotalBs.setText("Total Bs:");
+
     }//GEN-LAST:event_botonCobrarActionPerformed
 
 
-    private void botonDetalleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonDetalleActionPerformed
-
-
-    }//GEN-LAST:event_botonDetalleActionPerformed
-
     private void tablaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaMouseClicked
-        
-       if (evt.getClickCount() == 1) {
+
+        if (evt.getClickCount() == 1) {
             fila = tabla.getSelectedRow();
         }
-        
+
+        productoDevuelto = (String) tableModel.getValueAt(fila, 2);
+
     }//GEN-LAST:event_tablaMouseClicked
 
     public static String getCodigo() {
         return codigo;
     }
 
-    public static String getCantidades() {
-        return cantidades;
+    public static String getMetodoDePago() {
+        return metodoDePago;
+    }
+
+    public static String getCantidadAComprar() {
+        return cantidadAComprar;
     }
 
     public static DefaultTableModel getTableModel() {
         return tableModel;
+    }
+
+    public static DefaultTableModel getTableModel2() {
+        return tableModel2;
+    }
+
+    public static String getProductoDevuelto() {
+        return productoDevuelto;
     }
 
     /**
@@ -405,11 +452,14 @@ public class Caja extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton botonCobrar;
-    private javax.swing.JButton botonDetalle;
     private javax.swing.JButton botonEliminar;
     private javax.swing.JButton botonagregar;
+    private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JRadioButton jRadioButtonDevito;
+    private javax.swing.JRadioButton jRadioButtonEfectivo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelTotalBs;
     private javax.swing.JLabel labelTotalDoll;

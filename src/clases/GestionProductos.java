@@ -1,6 +1,7 @@
 package clases;
 
 import java.io.*;
+import java.util.Arrays;
 import java.util.Iterator;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -61,7 +62,6 @@ public class GestionProductos {
             String nombreHoja = libro.getSheetName(1);
             Sheet hoja = libro.getSheet(nombreHoja);
 
-            
             new BaseDeDatos().removeRow(hoja, id);
 
             try (OutputStream fileOut = new FileOutputStream(nameFile)) {
@@ -83,6 +83,7 @@ public class GestionProductos {
         tableModel.addColumn("Nombre");
         tableModel.addColumn("Marca");
         tableModel.addColumn("Precio de Costo");
+        tableModel.addColumn("Porcentaje");
         tableModel.addColumn("Precio Venta $");
         tableModel.addColumn("Cantidad");
 
@@ -91,46 +92,30 @@ public class GestionProductos {
             String nombreHoja = libro.getSheetName(1);
             Sheet hoja = libro.getSheet(nombreHoja);
 
-            int maxCol = 0;
-            for (int a = 0; a <= hoja.getLastRowNum(); a++) {
-                if (hoja.getRow(a) != null) {
-                    if (hoja.getRow(a).getLastCellNum() > maxCol) {
-                        maxCol = hoja.getRow(a).getLastCellNum();
-                    }
-                }
-            }
-            if (maxCol > 0) {
-
-                //recorre fila por fila
-                Iterator<Row> rowIterator = hoja.iterator();
-                while (rowIterator.hasNext()) {
-
-                    int index = 0;
-                    Row fila = rowIterator.next();
-
-                    Object[] obj = new Object[fila.getLastCellNum()];
-                    Iterator<Cell> cellIterator = fila.cellIterator();
-
-                    while (cellIterator.hasNext()) {
-                        Cell cell = cellIterator.next();
-                        //contenido para celdas vacias
-                        while (index < cell.getColumnIndex()) {
-                            obj[index] = "";
-                            index += 1;
+            int primeraFila = 1;
+            Object[] obj = null;
+            for (int i = primeraFila; i <= hoja.getLastRowNum(); i++) {
+                Row fila = hoja.getRow(i);
+                if (fila == null) {
+                    JOptionPane.showMessageDialog(null, "No hay datos");
+                } else {
+                    obj = new Object[fila.getLastCellNum()];
+                    for (int cn = fila.getFirstCellNum(); cn < fila.getLastCellNum(); cn++) {
+                        Cell celda = fila.getCell(cn, Row.MissingCellPolicy.RETURN_BLANK_AS_NULL);
+                        if (celda == null) {
+                            // The cell is empty 
+                        } else {
+                            obj[cn] = celda.getStringCellValue();
                         }
-                        obj[index] = cell.getStringCellValue();
-                        index += 1;
                     }
                     tableModel.addRow(obj);
-                }
 
-            } else {
-                JOptionPane.showMessageDialog(null, "No existe una base de datos");
+                }
             }
+
         } catch (IOException ex) {
             JOptionPane.showMessageDialog(null, "No existe una base de datos" + ex);
         }
     }
 
-    
 }

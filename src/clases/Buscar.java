@@ -2,6 +2,7 @@ package clases;
 
 import java.io.*;
 import java.util.Iterator;
+import javax.swing.JOptionPane;
 import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.ss.usermodel.*;
 import ventanas.Caja;
@@ -17,7 +18,7 @@ public class Buscar {
     private int id;
     private static String[] datos;
 
-    public void buscarEmpleado( int id) {
+    public void buscarEmpleado(int id) {
 
         try {
             Workbook libro = WorkbookFactory.create(new FileInputStream(nameFile));
@@ -55,7 +56,6 @@ public class Buscar {
             Sheet hoja = libro.getSheet(nombreHoja);
 
             //recorre celda por celda
-            
             //id = ListadoDeProductos.getId();
             int index = 0;
             Row fila = hoja.getRow(id);
@@ -84,7 +84,7 @@ public class Buscar {
             Workbook libro = WorkbookFactory.create(new FileInputStream(nameFile));
             String nombreHoja = libro.getSheetName(1);
             Sheet hoja = libro.getSheet(nombreHoja);
-            String codigo;
+            String codigo = "";
 
             Iterator<Row> rowIterator = hoja.iterator();
             String codigoCaja = Caja.getCodigo();
@@ -95,29 +95,31 @@ public class Buscar {
 
                 if (codigo.equals(codigoCaja)) {
                     id = celda.getRowIndex();
+                } else {
+                    codigo = "";
                 }
             }
-            int index = 0;
-            Row fila = hoja.getRow(id);
+            if (codigo == null) {
+                JOptionPane.showMessageDialog(null, "Codigo invalido");
+            } else {
+                int index = 0;
+                Row fila = hoja.getRow(id);
 
-            datos = new String[fila.getLastCellNum()];
-            Iterator<Cell> cellIterator = fila.cellIterator();
+                datos = new String[fila.getLastCellNum()];
+                Iterator<Cell> cellIterator = fila.cellIterator();
 
-            while (cellIterator.hasNext()) {
-                Cell cell = cellIterator.next();
+                while (cellIterator.hasNext()) {
+                    Cell cell = cellIterator.next();
 
-                datos[index] = cell.getStringCellValue();
-                index += 1;
+                    datos[index] = cell.getStringCellValue();
+                    index += 1;
 
+                }
             }
-
         } catch (IOException | EncryptedDocumentException e) {
         }
 
     }
-    
-
-    
 
     public static String[] getDatos() {
         return datos;

@@ -1,8 +1,20 @@
 package ventanas;
 
 import clases.Disennio;
+import clases.VentasClass;
+import com.itextpdf.text.BaseColor;
+import com.itextpdf.text.Chunk;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.Font;
+import com.itextpdf.text.FontFactory;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import java.awt.Image;
+import java.io.FileOutputStream;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -10,6 +22,7 @@ import javax.swing.ImageIcon;
  */
 public class VentasDiarias extends javax.swing.JFrame {
 
+    private static DefaultTableModel tableModel;
 
     public VentasDiarias() {
         initComponents();
@@ -17,16 +30,25 @@ public class VentasDiarias extends javax.swing.JFrame {
         setResizable(false);
         setTitle("Ventas Diarias");
         Disennio wallpaperUrl = new Disennio();
-        
+
         ImageIcon wallpaper = new ImageIcon(new ImageIcon(wallpaperUrl.getWallpaper()).getImage()
                 .getScaledInstance(labelWallpaper.getWidth(), labelWallpaper.getHeight(), Image.SCALE_DEFAULT));
         labelWallpaper.setIcon(wallpaper);
+
+        llenadaDeTabla();
     }
-    
+
     @Override
-    public Image getIconImage(){
+    public Image getIconImage() {
         Disennio icono = new Disennio();
         return icono.getIconImage();
+    }
+
+    public void llenadaDeTabla() {
+        VentasClass ventas = new VentasClass();
+        ventas.llenadoTablaVentas(2);
+        tableModel = VentasClass.getTableModel();
+        tabla.setModel(tableModel);
     }
 
     /**
@@ -41,7 +63,9 @@ public class VentasDiarias extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tabla = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
-        jButton1 = new javax.swing.JButton();
+        botonImprimir = new javax.swing.JButton();
+        botonGuardar = new javax.swing.JButton();
+        botonCalcular = new javax.swing.JButton();
         labelWallpaper = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -71,22 +95,84 @@ public class VentasDiarias extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tabla);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 76, 637, 350));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(28, 76, 850, 350));
 
         jLabel2.setFont(new java.awt.Font("Mongolian Baiti", 1, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setText("Ventas Diarias");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, -1, -1));
+        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 20, -1, -1));
 
-        jButton1.setBackground(new java.awt.Color(51, 51, 51));
-        jButton1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("Imprimir");
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 460, -1, -1));
-        getContentPane().add(labelWallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(-6, -1, 710, 530));
+        botonImprimir.setBackground(new java.awt.Color(51, 51, 51));
+        botonImprimir.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        botonImprimir.setForeground(new java.awt.Color(255, 255, 255));
+        botonImprimir.setText("Imprimir");
+        botonImprimir.setEnabled(false);
+        botonImprimir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonImprimirActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botonImprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 450, 100, 30));
+
+        botonGuardar.setBackground(new java.awt.Color(51, 51, 51));
+        botonGuardar.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        botonGuardar.setForeground(new java.awt.Color(255, 255, 255));
+        botonGuardar.setText("Guardar");
+        botonGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonGuardarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botonGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 450, 100, 30));
+
+        botonCalcular.setBackground(new java.awt.Color(51, 51, 51));
+        botonCalcular.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        botonCalcular.setForeground(new java.awt.Color(255, 255, 255));
+        botonCalcular.setText("Calcular");
+        botonCalcular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                botonCalcularActionPerformed(evt);
+            }
+        });
+        getContentPane().add(botonCalcular, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 450, 100, 30));
+
+        labelWallpaper.setBackground(new java.awt.Color(51, 51, 51));
+        getContentPane().add(labelWallpaper, new org.netbeans.lib.awtextra.AbsoluteConstraints(-6, -1, 910, 510));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void botonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonGuardarActionPerformed
+
+        new VentasClass().ventasMensuales();
+        JOptionPane.showMessageDialog(null, "Guardado en reporte mensual");
+
+    }//GEN-LAST:event_botonGuardarActionPerformed
+
+    private void botonCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonCalcularActionPerformed
+
+        new VentasClass().totalGanancia(tableModel);
+        tableModel = VentasClass.getTableModel();
+        tabla.setModel(tableModel);
+        this.botonCalcular.setEnabled(false);
+        this.botonGuardar.setEnabled(false);
+        this.botonImprimir.setEnabled(true);
+
+    }//GEN-LAST:event_botonCalcularActionPerformed
+
+    private void botonImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_botonImprimirActionPerformed
+
+       
+
+    }//GEN-LAST:event_botonImprimirActionPerformed
+
+    public static DefaultTableModel getTableModel() {
+        return tableModel;
+    }
+
+    public static void setTableModel(DefaultTableModel tableModel) {
+        VentasDiarias.tableModel = tableModel;
+    }
 
     /**
      * @param args the command line arguments
@@ -124,7 +210,9 @@ public class VentasDiarias extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton botonCalcular;
+    private javax.swing.JButton botonGuardar;
+    private javax.swing.JButton botonImprimir;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel labelWallpaper;
